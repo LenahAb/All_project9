@@ -197,6 +197,13 @@ class _LogIn extends State<LogIn> {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                 backgroundColor: Colors.orangeAccent,
+                                  duration: Duration(seconds: 1000),
+                                  //padding: EdgeInsets.only(right: 30.0),
+                                  action: SnackBarAction(
+                                      label: 'حسنًا',
+                                      textColor: Colors.white,
+                                      onPressed: () {
+                                      }),
                                  content: Text(
                                  "لم يتم العثور على مستخدم لهذا البريد الإلكتروني",
                                  //'لم يتم العثور على المستخدم '
@@ -210,6 +217,13 @@ class _LogIn extends State<LogIn> {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                       backgroundColor: Colors.orangeAccent,
+                                        duration: Duration(seconds: 1000),
+                                        //padding: EdgeInsets.only(right: 30.0),
+                                        action: SnackBarAction(
+                                            label: 'حسنًا',
+                                            textColor: Colors.white,
+                                            onPressed: () {
+                                            }),
                                       content: Text(
                                       "كلمة المرور خاطئة",
                                       style: TextStyle(
@@ -222,6 +236,13 @@ class _LogIn extends State<LogIn> {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       backgroundColor: Colors.orangeAccent,
+                                      duration: Duration(seconds: 1000),
+                                      //padding: EdgeInsets.only(right: 30.0),
+                                      action: SnackBarAction(
+                                          label: 'حسنًا',
+                                          textColor: Colors.white,
+                                          onPressed: () {
+                                          }),
                                       content: Text(
                                         "تم تعطيل المستخدم لهذا البريد الإلكتروني ",
                                         style: TextStyle(
@@ -234,6 +255,13 @@ class _LogIn extends State<LogIn> {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       backgroundColor: Colors.orangeAccent,
+                                      duration: Duration(seconds: 1000),
+                                      //padding: EdgeInsets.only(right: 30.0),
+                                      action: SnackBarAction(
+                                          label: 'حسنًا',
+                                          textColor: Colors.white,
+                                          onPressed: () {
+                                          }),
                                       content: Text(
                                         "لم يتم تمكين تسجيل الدخول باستخدام البريد الإلكتروني وكلمة المرور",
                                         style: TextStyle(
@@ -246,6 +274,13 @@ class _LogIn extends State<LogIn> {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       backgroundColor: Colors.orangeAccent,
+                                      duration: Duration(seconds: 1000),
+                                      //padding: EdgeInsets.only(right: 30.0),
+                                      action: SnackBarAction(
+                                          label: 'حسنًا',
+                                          textColor: Colors.white,
+                                          onPressed: () {
+                                          }),
                                       content: Text(
                                         "طلبات كثيرة جدا. حاول مرة أخرى في وقت لاحق",
                                         style: TextStyle(

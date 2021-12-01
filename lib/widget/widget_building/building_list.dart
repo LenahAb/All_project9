@@ -2,12 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:log_in/screens/screens_building/edit_building_screen.dart';
+import 'package:log_in/screens/screens_device/list_device_smart_screen.dart';
 import 'package:log_in/utils/databaseBuilding.dart';
 
 
 class BuildingList extends StatefulWidget {
   final User user;
   const BuildingList({required this.user});
+
+
+  
   _BuildingList createState() => _BuildingList();}
   class _BuildingList extends State<BuildingList> {
 
@@ -35,10 +39,11 @@ class BuildingList extends StatefulWidget {
               itemBuilder: (context, index) {
                 var noteInfo = snapshot.data!.docs[index].data();
                 String docID = snapshot.data!.docs[index].id;
-                String nameDevice = noteInfo['building_name'];
-                String typeDevice = noteInfo['building_type'];
+                String nameBuilding = noteInfo['building_name'];
+                String typeBuilding = noteInfo['building_type'];
 
 
+               
                 return Ink(
                     child: Container(
                       width: 10.0,
@@ -67,8 +72,8 @@ class BuildingList extends StatefulWidget {
                                 MaterialPageRoute(
                                   builder: (context) =>
                                       EditBuildingScreen(
-                                        currentNameDevice: nameDevice,
-                                        currentTypeDevice: typeDevice,
+                                        currentNameDevice: nameBuilding,
+                                        currentTypeDevice: typeBuilding,
                                         documentId: docID,
                                       ),
                                 ),
@@ -94,18 +99,16 @@ class BuildingList extends StatefulWidget {
 
 
                     ),
-                    // onTap: () => Navigator.of(context).push(
-                    // MaterialPageRoute(
-                    // builder: (context) => EditBuildingScreen(
-                    // currentNameDevice: nameDevice,
-                    // currentTypeDevice: typeDevice,
-                    //  documentId: docID,
 
-                    // ),
-                    // ),
-                    //    ),
+                     onTap: () => Navigator.of(context).push(
+                     MaterialPageRoute(
+                     builder: (context) => ListDeviceSmartScreen(
+                      BuildingId: docID, user: u,
+                    ),
+                     ),
+                       ),
                     title: Text(
-                      nameDevice,
+                      nameBuilding,
                       style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold, color: Colors.black),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -113,7 +116,7 @@ class BuildingList extends StatefulWidget {
 
                     ),
                     subtitle: Text(
-                      typeDevice,
+                      typeBuilding,
                       style: TextStyle(fontSize: 18, color: Colors.black),
                       textAlign: TextAlign.right,
                       maxLines: 1,
@@ -135,8 +138,8 @@ class BuildingList extends StatefulWidget {
                                 MaterialPageRoute(
                                   builder: (context) =>
                                       EditBuildingScreen(
-                                        currentNameDevice: nameDevice,
-                                        currentTypeDevice: typeDevice,
+                                        currentNameDevice: nameBuilding,
+                                        currentTypeDevice: typeBuilding,
                                         documentId: docID,
 
                                       ),
@@ -191,9 +194,6 @@ class BuildingList extends StatefulWidget {
       );
     }
 
-    void SelectedItem(item) {
-      if (item == 2) {}
-    }
 
     void showAlertDialog(BuildContext context, String doc) {
       // set up the buttons
@@ -214,7 +214,7 @@ class BuildingList extends StatefulWidget {
           width: 140,
         height: 45,// <-- Your width
           child:TextButton(
-        child: Text("حذف المبنى",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold, color: Colors.red,),),
+        child: Text("حذف",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold, color: Colors.red,),),
             style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Color(0xD2EFEFEF))),
             onPressed: () {
           Navigator.of(context).pop();

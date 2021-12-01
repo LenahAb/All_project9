@@ -134,6 +134,8 @@ class _EditPasswordFormState extends State<EditPasswordForm> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             backgroundColor: Colors.lightGreen,
+                            duration: Duration(seconds: 30),
+                            //padding: EdgeInsets.only(right: 30.0),
                             content: Text(
                              // 'Your Password has been Changed. Login again !',
                               'تم تغيير كلمة السر الخاصة بك، سجل الدخول مرة أخرى ',

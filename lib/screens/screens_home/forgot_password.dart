@@ -134,6 +134,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       backgroundColor: Colors.lightGreen,
+                                      duration: Duration(seconds: 30),
                                       content: Text(
                                         //'Password Reset Email has been sent !',
                                         'تم إرسال إلى البريد الإلكتروني الخاص بك لإعادة تعيين كلمة المرور',
@@ -149,6 +150,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         backgroundColor: Colors.orangeAccent,
+                                        duration: Duration(seconds: 1000),
+                                        //padding: EdgeInsets.only(right: 30.0),
+                                        action: SnackBarAction(
+                                            label: 'حسنًا',
+                                            textColor: Colors.white,
+                                            onPressed: () {
+                                            }),
                                         content: Text(
                                           "لم يتم العثور على مستخدم لهذا البريد الإلكتروني",
                                           style: TextStyle(

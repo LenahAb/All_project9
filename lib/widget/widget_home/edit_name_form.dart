@@ -137,6 +137,7 @@ class _EditNameFormState extends State<EditNameForm> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 backgroundColor: Colors.lightGreen,
+                                duration: Duration(seconds: 30),
                                 content: Text(
                                   'تم تحديث الاسم بنجاح',
                                   style: TextStyle(fontSize: 18.0),

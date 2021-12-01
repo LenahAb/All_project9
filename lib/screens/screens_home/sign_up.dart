@@ -218,7 +218,7 @@ class _SingUp extends State<SingUp> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 backgroundColor: Colors.orangeAccent,
-                                duration: Duration(seconds: 40),
+                                duration: Duration(seconds: 1000),
                                 //padding: EdgeInsets.only(right: 30.0),
                                 action: SnackBarAction(
                                     label: 'حسنًا',
