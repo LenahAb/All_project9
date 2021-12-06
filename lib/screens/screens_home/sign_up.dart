@@ -22,6 +22,8 @@ class _SingUp extends State<SingUp> {
   final _focusEmail = FocusNode();
   final _focusPassword = FocusNode();
 
+  final TextEditingController _controller = TextEditingController();
+
   bool _isProcessing = false;
 
   @override
@@ -82,6 +84,7 @@ class _SingUp extends State<SingUp> {
                           child: SizedBox(
                             height: 90.0,
                             child: CustomFormField(
+                              isLabelEnabled: true,
                               controller: _nameTextController,
                               focusNode: _focusName,
                               keyboardType: TextInputType.name,
@@ -102,6 +105,7 @@ class _SingUp extends State<SingUp> {
                           child: SizedBox(
                             height: 90.0,
                             child: CustomFormField(
+                              isLabelEnabled: true,
                               controller: _emailTextController,
                               focusNode: _focusEmail,
                               obscureText:false,
@@ -124,6 +128,7 @@ class _SingUp extends State<SingUp> {
                           child: SizedBox(
                             height: 90.0,
                             child: CustomFormField(
+                              isLabelEnabled: true,
                               controller: _passwordTextController,
                               focusNode: _focusPassword,
                               obscureText:true,

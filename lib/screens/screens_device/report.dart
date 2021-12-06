@@ -1,18 +1,32 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:log_in/utils/background_image_widget.dart';
 import 'package:log_in/utils/utils_device/device_data.dart';
 import 'package:log_in/utils/utils_device/month_model.dart';
+import 'package:log_in/utils/utils_device/navigaion.dart';
 
 
 
 class Report extends StatefulWidget {
+  final String BuildingId;
+  final User user;
+
+  Report({
+    required this. BuildingId,
+    required this.user
+  });
   @override
   _ReportState createState() => _ReportState();
 }
 
 class _ReportState extends State<Report> {
+  late User u;
+
+
+
+
   bool loading = true;
 
   // put data for chart
@@ -39,7 +53,8 @@ class _ReportState extends State<Report> {
           data.add(ReportSeries(
               name: element.name,
               amount: value.data()!['amount'],
-              barColor: charts.ColorUtil.fromDartColor(Colors.blue)));
+              barColor: charts.ColorUtil.fromDartColor(Colors.blue),
+              seriesColor:charts.ColorUtil.fromDartColor(Colors.white)));
         }
       });
     }
@@ -113,6 +128,7 @@ class _ReportState extends State<Report> {
   @override
   void initState() {
     // TODO: implement initState
+    u = widget.user ;
     super.initState();
     getDevicesNames();
     getMonthsData();
@@ -124,10 +140,24 @@ class _ReportState extends State<Report> {
         image: AssetImage("assets/Colorized Register&Login v2 – 19.png"),
 
     child:Scaffold(
+      backgroundColor: Colors.transparent,
+
       appBar: AppBar(
         elevation: 0,
-        leading: BackButton(
-            color: Color(0xFF535353)
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+                icon: const Icon(Icons.arrow_back, color: Color(0xFF535353)),
+                onPressed: () async {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => Navigation(user: u, BuildingId: widget.BuildingId),
+                    ),
+                  );
+                }
+            );
+          },
+
         ),
         backgroundColor: Color(0xFFF5F8FA),
         centerTitle: true,
@@ -155,9 +185,15 @@ class _ReportState extends State<Report> {
                             ),
                             // textDirection: TextDirection.rtl
                           ),
+                          SizedBox(height: 8.0),
                           DropdownButton(
+                            dropdownColor: Colors.white,
+                            style: TextStyle(color: Colors.black),
+                            iconEnabledColor:Color(0xFF0390C3),
+                            isExpanded: true,
+                            isDense: true,
                             value: dropValue,
-                            icon: Icon(Icons.keyboard_arrow_down),
+                            //icon: Icon(Icons.keyboard_arrow_down),
                             items: itsMonthName.map((items) {
                               return DropdownMenuItem(
                                 value: items,
@@ -220,15 +256,15 @@ class _ReportState extends State<Report> {
                         children: [
                           const Text('الاستهلاك الشهري لأجهزة المبنى',
                               style: TextStyle(
-                                color: Colors.grey,
+                                color: Color(0xFF0390C3),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18,
                               ),
                               textDirection: TextDirection.rtl),
-                          Container(
-                            height: 2,
-                            color: Colors.grey[300],
-                          ),
+                         // Container(
+                           // height: 2,
+                          //  color: Colors.grey[300],
+                          //),
                           const SizedBox(
                             height: 20,
                           ),
@@ -250,7 +286,7 @@ class _ReportState extends State<Report> {
                                 Text(
                                   fullAmount.toString(),
                                   style: const TextStyle(
-                                      fontSize: 16, color: Colors.grey),
+                                      fontSize: 16, color: Colors.black),
                                 ),
                                 Text(
                                   '$dropValue',
@@ -264,7 +300,7 @@ class _ReportState extends State<Report> {
                       ),
                     ),
                     const SizedBox(
-                      height: 40,
+                      height: 10,
                     ),
                     Container(
                       padding: const EdgeInsets.all(20),
@@ -274,7 +310,7 @@ class _ReportState extends State<Report> {
                         children: [
                           const Text('تكلفة الاستهلاك الشهري للمبنى',
                               style: TextStyle(
-                                color: Colors.grey,
+                                color: Color(0xFF0390C3),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18,
                               ),
@@ -300,7 +336,7 @@ class _ReportState extends State<Report> {
                                 Text(
                                   fullCost.toString(),
                                   style: const TextStyle(
-                                      fontSize: 16, color: Colors.grey),
+                                      fontSize: 16, color: Colors.black),
                                 ),
                                 Text(
                                   '$dropValue',
@@ -327,9 +363,9 @@ class ReportSeries {
   final String name;
   final dynamic amount;
   final charts.Color barColor;
-
+  final charts.Color seriesColor;
   ReportSeries(
-      {required this.name, required this.amount, required this.barColor});
+      {required this.name, required this.amount, required this.barColor, required this.seriesColor});
 }
 
 // define class to put data in the chart
@@ -340,15 +376,19 @@ class ReportChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     List<charts.Series<ReportSeries, String>> series = [
       charts.Series(
         id: "MonthlyConsumption",
+        seriesColor: charts.ColorUtil.fromDartColor(Colors.white),
         data: data, // select what data to use
         domainFn: (ReportSeries series, _) =>
             series.name, // display names in x-line
         measureFn: (ReportSeries series, _) =>
             series.amount, // display amounts in y-line
-        colorFn: (ReportSeries series, _) => series.barColor, // choose color
+        colorFn: (ReportSeries series, _) => series.barColor,
+        fillColorFn:(ReportSeries series, _) => series.seriesColor,
+        // choose color
       )
     ];
 

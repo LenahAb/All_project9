@@ -5,12 +5,12 @@ import 'package:log_in/widget/widget_device/edit_device_form.dart';
 
 class EditDeviceScreen extends StatefulWidget {
   final String currentNameDevice;
-  //final String currentTypeDevice;
+  final currentTypeDevice;
   final String documentId;
 
   EditDeviceScreen({
     required this.currentNameDevice,
-    //required this.currentTypeDevice,
+    required this.currentTypeDevice,
     required this.documentId,
   });
 
@@ -38,6 +38,9 @@ class _EditDeviceScreenState extends State<EditDeviceScreen> {
       backgroundColor: Colors.transparent,
       appBar: AppBar(
         elevation: 0,
+        centerTitle: true,
+        title: Text('تعديل معلومات الجهاز',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF0390C3), letterSpacing: 2,
+        ),),
         leading: BackButton(
             color: Color(0xFF535353)
         ),
@@ -53,9 +56,9 @@ class _EditDeviceScreenState extends State<EditDeviceScreen> {
             child: EditDeviceForm(
               documentId: widget.documentId,
               nameDeviceFocusNode: _nameDeviceFocusNode,
-              //typeDeviceFocusNode: _typeDeviceFocusNode,
+              typeDeviceFocusNode: _typeDeviceFocusNode,
               currentNameDevice: widget.currentNameDevice,
-             // currentTypeDevice: widget.currentTypeDevice,
+              currentTypeDevice: widget.currentTypeDevice,
             ),
           ),
         ),

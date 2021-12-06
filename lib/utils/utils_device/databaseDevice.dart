@@ -12,19 +12,22 @@ class DatabaseDevice {
     required String buildingId,
   }) async {
     DocumentReference documentReferencer = firestore.collection('Device').doc();
-
     Map<String, dynamic> data = <String, dynamic>{
-      "nameDevice": nameDevice,
-      "deviseId": documentReferencer.id,
-      "typeDevice": firestore.doc('Type/3QEEcZyegpb9wS1OPGca'),
-      "building_id": firestore.doc('Building/'+buildingId
-     ),
+            "device_name": nameDevice,
+            "device_id": documentReferencer.id,
+            "active_consumption":0,
+            "device_type": firestore.doc('Type/' + typeDevice),
+            "building_id": firestore.doc('Building/' + buildingId),
     };
+
 
     await documentReferencer
         .set(data)
         .whenComplete(() => print("Note Device added to the database"))
         .catchError((e) => print(e));
+
+
+
   }
 
 
@@ -35,11 +38,11 @@ class DatabaseDevice {
     required String typeDevice,
     required String docId,
   }) async {
-    DocumentReference documentReferencer = firestore.collection('Device').doc(docId);
+     DocumentReference documentReferencer = await firestore.collection('Device').doc(docId);
 
     Map<String, dynamic> data = <String, dynamic>{
-      "nameDevice": nameDevice,
-      "typeDevice": typeDevice,
+      "device_name": nameDevice,
+      "device_type": firestore.doc('Type/' + typeDevice),
     };
 
     await documentReferencer
@@ -87,3 +90,5 @@ class DatabaseDevice {
         .catchError((e) => print(e));
   }
 }
+
+

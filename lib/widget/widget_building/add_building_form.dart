@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:log_in/screens/screens_building/list_building_screen.dart';
 import 'package:log_in/utils/databaseBuilding.dart';
@@ -24,7 +25,6 @@ class AddBuildingForm extends StatefulWidget {
 
 class _AddDeviceForm extends State<AddBuildingForm> {
   final _addDeviceFormKey = GlobalKey<FormState>();
-
   late User _IdUser;
 
   @override
@@ -43,6 +43,7 @@ class _AddDeviceForm extends State<AddBuildingForm> {
   var _selectedFruit;
   late bool setDefaultMake=true;
 
+
   final TextEditingController _nameDeviceController = TextEditingController();
   final TextEditingController _typeDeviceController = TextEditingController();
 
@@ -57,7 +58,7 @@ class _AddDeviceForm extends State<AddBuildingForm> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
 
-                Padding(padding: EdgeInsets.only(left: 230.0,top: 60.0),
+               Padding(padding: EdgeInsets.only(left: 230.0,top: 60.0),
                   child: Text(' إضافة مبنى',style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF0390C3), letterSpacing: 2,),),
                 ),
               ]),
@@ -94,8 +95,12 @@ class _AddDeviceForm extends State<AddBuildingForm> {
                   style: TextStyle(color: Colors.black, fontSize: 19.0, letterSpacing: 1,
                   ),
                 ),
+
+
+
+
                 SizedBox(height: 8.0),
-                SizedBox(height: 8.0),
+
 
                 //  InputDecorator(
                 //    decoration: InputDecoration(
@@ -106,18 +111,22 @@ class _AddDeviceForm extends State<AddBuildingForm> {
                 //  ),
 
 
-                //child: DropdownButtonHideUnderline(
+                 //child: DropdownButtonHideUnderline(
 
-                DropdownButton(
+
+        Padding(padding: EdgeInsets.only(right: 20,left: 15),
+          child: DropdownButton(
+                  dropdownColor: Colors.white,
+                  style: TextStyle(color: Colors.black),
+                  iconEnabledColor:Color(0xFF0390C3),
                   isExpanded: true,
+                  isDense: true,
 
-
-
+                 /*
                   icon: Icon(Icons.arrow_drop_down,color: Colors.grey,),
 
-                  dropdownColor: Colors.white,
-                  isDense: true,
-                  // Reduces the dropdowns height by +/- 50%
+                  dropdownColor: Colors.white,*/
+
 
                   value: _selectedFruit,
                   items: BuildingType.map((item) {
@@ -125,22 +134,19 @@ class _AddDeviceForm extends State<AddBuildingForm> {
                     return DropdownMenuItem(
                         value: item,
 
-
-
                         child: Container(
                           alignment: Alignment.centerRight,
-
-                          // height: 2,
-
-
-                          child:  Text(item),
+                          child:  Text(item,style: TextStyle(fontSize: 16),),
 
                         ));
                   }).toList(),
-                  onChanged: (selectedItem) => setState(() => _selectedFruit = selectedItem,
+                  onChanged: (selectedItem) => setState(() {
+                    _selectedFruit = selectedItem;
+                    }
                   ),
+                  //hint:Text("                                                                                     "),
                 ),
-
+        ),
 
               ],
           ),
@@ -155,7 +161,7 @@ class _AddDeviceForm extends State<AddBuildingForm> {
           )
 
               : Center(child:
-          Padding(padding: EdgeInsets.only(top: 40,left: 40.0, right: 40.0,),
+          Padding(padding: EdgeInsets.only(top: 60,left: 40.0, right: 40.0,),
 
             child:Container(width: double.maxFinite,
 
@@ -177,11 +183,11 @@ class _AddDeviceForm extends State<AddBuildingForm> {
                   if (_addDeviceFormKey.currentState!.validate()) {
                     setState(() { _isProcessing = true;});
 
-                    if (AddName() == true) {
+
                       await DatabaseBuilding.addBuilding(
-                        nameDevice: _nameDeviceController.text,
-                        typeDevice: _selectedFruit,
-                        userUid: _IdUser.uid,);
+                        nameBuilding: _nameDeviceController.text,
+                        typeBuilding: _selectedFruit,
+                        buildingOwnerId: _IdUser.uid,);
 
 
                  setState(() {
@@ -194,7 +200,7 @@ class _AddDeviceForm extends State<AddBuildingForm> {
                       ),
                       );
                     }
-                    ScaffoldMessenger.of(context).showSnackBar(
+                    /*ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         backgroundColor: Colors.orangeAccent,
                         content: Text(
@@ -203,10 +209,10 @@ class _AddDeviceForm extends State<AddBuildingForm> {
                           textAlign: TextAlign.right,
                         ),
                       ),
-                    );
+                    );*/
 
 
-                  }
+
                 },
                 child: Padding(
                   padding: EdgeInsets.only(top: 16.0, bottom: 16.0),

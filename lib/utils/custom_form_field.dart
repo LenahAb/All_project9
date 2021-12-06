@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 
-class CustomFormField extends StatelessWidget {
-  const CustomFormField({
+class CustomFormField extends StatelessWidget{
+
+   CustomFormField({
     Key? key,
     required TextEditingController controller,
     required FocusNode focusNode,
@@ -11,6 +12,7 @@ class CustomFormField extends StatelessWidget {
     required bool obscureText ,
     required String label,
     required String hint,
+
     required Function(String value) validator,
     this.isCapitalized= false,
     this.maxLines = 1,
@@ -25,6 +27,7 @@ class CustomFormField extends StatelessWidget {
         _validator = validator,
         super(key: key);
 
+
   final TextEditingController _emailController;
   final FocusNode _emailFocusNode;
   final TextInputType _keyboardtype;
@@ -36,6 +39,8 @@ class CustomFormField extends StatelessWidget {
   final int maxLines;
   final bool isLabelEnabled;
   final Function(String) _validator;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -95,4 +100,7 @@ class CustomFormField extends StatelessWidget {
 
     );
   }
+
+
+
 }

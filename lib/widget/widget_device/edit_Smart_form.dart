@@ -81,7 +81,7 @@ class _EditSmartFormState extends State<EditSmartForm> {
             valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF0390C3),),
           ),
           )
-              : Padding(padding: EdgeInsets.only(top: 40,left: 40.0, right: 40.0,),
+              : Padding(padding: EdgeInsets.only(top: 60,left: 40.0, right: 40.0,),
 
             child:Container(width: double.maxFinite,
 

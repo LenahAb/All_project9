@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:log_in/screens/screens_device/list_device_smart_screen.dart';
 import 'package:log_in/utils/custom_form_field.dart';
 import 'package:log_in/utils/utils_device/databaseDevice.dart';
+import 'package:log_in/utils/utils_device/navigaion.dart';
 import 'package:log_in/utils/validator.dart';
 
 
@@ -90,8 +90,9 @@ class _AddDeviceForm extends State<AddDeviceForm> {
                   ),
                 ),
 
-
-                   Center(
+                SizedBox(height: 8.0),
+            Padding(padding: EdgeInsets.only(right: 20,left: 15),
+              child: Center(
                     child: StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance
                           .collection('Type')
@@ -113,14 +114,15 @@ class _AddDeviceForm extends State<AddDeviceForm> {
                           dropdownColor: Colors.white,
                           style: TextStyle(color: Colors.black),
                           iconEnabledColor:Color(0xFF0390C3),
-                          isExpanded: false,
+                          isExpanded: true,
+                          isDense: true,
                           value: typeDevice,
                           items: snapshot.data?.docs.map((value) {
                             return DropdownMenuItem(
                               value: value.get('type_name'),
                               child: Container(
                             alignment: Alignment.centerRight,
-                              child: Text('${value.get('type_name')}'),
+                              child: Text('${value.get('type_name')}',style: TextStyle(fontSize: 16),),
                             ),);
                           }).toList(),
                           onChanged: (value) {
@@ -134,16 +136,17 @@ class _AddDeviceForm extends State<AddDeviceForm> {
                               },
                             );
                           },
-                          hint:Text("                                                                                     "),
+                          //hint:Text("                                                                                     "),
 
                         );
                       },
                     ),
                   ),
-
+              ),
               ],
             ),
           ),
+
 
 
 
@@ -154,7 +157,7 @@ class _AddDeviceForm extends State<AddDeviceForm> {
           )
 
               : Center(child:
-                 Padding(padding: EdgeInsets.only(top: 40,left: 40.0, right: 40.0,),
+                 Padding(padding: EdgeInsets.only(top: 60,left: 40.0, right: 40.0,),
 
                 child:Container(width: double.maxFinite,
 
@@ -172,28 +175,38 @@ class _AddDeviceForm extends State<AddDeviceForm> {
               onPressed: () async {
                 widget.nameDeviceFocusNode.unfocus();
 
+                var d = FirebaseFirestore.instance.collection("Type");
+                d.get().then((QuerySnapshot snapshot) {
+                  snapshot.docs.forEach((DocumentSnapshot doc) async {
+                    if (doc["type_name"] == typeDevice ) {
+                      var  typeDeviceId = doc["type_id"];
+
 
                 if (_addDeviceFormKey.currentState!.validate()) {
                   setState(() { _isProcessing = true;});
 
                   await DatabaseDevice.addDevice(
                     nameDevice: _nameDeviceController.text,
-                    typeDevice: typeDevice,
+                    typeDevice: typeDeviceId,
                     buildingId: widget.BuildingId,
                   );
+
 
                   setState(() {
                     _isProcessing = false;
                   });
 
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => ListDeviceSmartScreen( BuildingId:widget.BuildingId, user: u,
+                    builder: (context) => Navigation(BuildingId:widget.BuildingId, user: u,
                        )
                   ),
 
                   );
 
+
                 }
+
+                    };});});
               },
               child: Padding(
                 padding: EdgeInsets.only(top: 16.0, bottom: 16.0),

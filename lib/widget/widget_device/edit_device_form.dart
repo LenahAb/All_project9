@@ -8,16 +8,16 @@ import 'package:log_in/utils/validator.dart';
 
 class EditDeviceForm extends StatefulWidget {
   final FocusNode nameDeviceFocusNode;
- // final FocusNode typeDeviceFocusNode;
+  final FocusNode typeDeviceFocusNode;
   final String currentNameDevice;
-  //final String currentTypeDevice;
+  final currentTypeDevice;
   final String documentId;
 
   const EditDeviceForm({
     required this.nameDeviceFocusNode,
-   // required this.typeDeviceFocusNode,
+    required this.typeDeviceFocusNode,
     required this.currentNameDevice,
-    //required this.currentTypeDevice,
+    required this.currentTypeDevice,
     required this.documentId,
   });
 
@@ -83,8 +83,9 @@ class _EditDeviceFormState extends State<EditDeviceForm> {
                 style: TextStyle(color: Colors.black, fontSize: 19.0, letterSpacing: 1,),
                 ),
 
-
-              Center(
+              SizedBox(height: 8.0),
+              Padding(padding: EdgeInsets.only(right: 20,left: 15),
+                child: Center(
                 child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
                       .collection('Type')
@@ -104,14 +105,15 @@ class _EditDeviceFormState extends State<EditDeviceForm> {
                       dropdownColor: Colors.white,
                       style: TextStyle(color: Colors.black),
                       iconEnabledColor:Color(0xFF0390C3),
-                      isExpanded: false,
+                      isExpanded: true,
+                      isDense: true,
                       value: typeDevice,
                       items: snapshot.data?.docs.map((value) {
                         return DropdownMenuItem(
                           value: value.get('type_name'),
                         child: Container(
                         alignment: Alignment.centerRight,
-                          child: Text('${value.get('type_name')}'),
+                          child: Text('${value.get('type_name')}',style: TextStyle(fontSize: 16),),
                         ),
                         );
                       }).toList(),
@@ -126,11 +128,12 @@ class _EditDeviceFormState extends State<EditDeviceForm> {
                           },
                         );
                       },
-                      hint:Text("                                                                                     "),
+                     // hint:Text("                                                                                     "),
 
                     );
                   },
                 ),
+              ),
               ),
               ],
             ),
@@ -145,7 +148,7 @@ class _EditDeviceFormState extends State<EditDeviceForm> {
             valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF0390C3),),
             ),
           )
-              : Padding(padding: EdgeInsets.only(top: 40,left: 40.0, right: 40.0,),
+              : Padding(padding: EdgeInsets.only(top: 60,left: 40.0, right: 40.0,),
 
               child:Container(width: double.maxFinite,
 
@@ -165,6 +168,13 @@ class _EditDeviceFormState extends State<EditDeviceForm> {
                 widget.nameDeviceFocusNode.unfocus();
                // widget.typeDeviceFocusNode.unfocus();
 
+
+                var d = FirebaseFirestore.instance.collection("Type");
+                d.get().then((QuerySnapshot snapshot) {
+                snapshot.docs.forEach((DocumentSnapshot doc) async {
+                     if (doc["type_name"] == typeDevice ) {
+                    var  typeDeviceId = doc["type_id"];
+
                 if (_editDeviceFormKey.currentState!.validate()) {
                   setState(() {
                     _isProcessing = true;
@@ -173,7 +183,7 @@ class _EditDeviceFormState extends State<EditDeviceForm> {
                   await DatabaseDevice.updateDevice(
                     docId: widget.documentId,
                     nameDevice: _nameDeviceController.text,
-                    typeDevice: typeDevice,
+                    typeDevice: typeDeviceId,
                   );
 
                   setState(() {
@@ -182,6 +192,7 @@ class _EditDeviceFormState extends State<EditDeviceForm> {
 
                   Navigator.of(context).pop();
                 }
+                     };});});
               },
               child: Padding(
                 padding: EdgeInsets.only(top: 16.0, bottom: 16.0),

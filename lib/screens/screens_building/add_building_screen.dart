@@ -33,6 +33,9 @@ class _AddBuildingScreenState extends State<AddBuildingScreen> {
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             elevation: 0,
+            centerTitle: true,
+            title: Text('إضافة مبنى',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF0390C3), letterSpacing: 2,
+            ),),
             leading: BackButton(
                 color: Color(0xFF535353)
             ),

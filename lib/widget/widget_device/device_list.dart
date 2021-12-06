@@ -28,11 +28,11 @@ class _DeviceList extends State<DeviceList> {
           return ListView.separated(
             separatorBuilder: (context, index) => SizedBox(height: 16.0),
             itemCount: snapshot.data!.docs.length,
-            itemBuilder: (context, index) {
-              var noteInfo = snapshot.data!.docs[index].data()!;
+              itemBuilder: (context, index) {
+               var noteInfo = snapshot.data!.docs[index].data()!;
               String docID = snapshot.data!.docs[index].id;
-              String nameDevice = noteInfo['nameDevice'];
-              //typeDevice = noteInfo['typeDevice'];
+              String nameDevice = noteInfo['device_name'];
+              final typeDevice = noteInfo['device_type'];
 
 
 
@@ -84,7 +84,7 @@ class _DeviceList extends State<DeviceList> {
                             MaterialPageRoute(
                               builder: (context) => EditDeviceScreen(
                                 currentNameDevice: nameDevice,
-                               // currentTypeDevice: typeDevice,
+                                currentTypeDevice: typeDevice,
                                 documentId: docID,
                               ),
                             ),

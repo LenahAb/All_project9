@@ -35,6 +35,9 @@ class _EditSmartScreenState extends State<EditSmartScreen> {
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             elevation: 0,
+            centerTitle: true,
+            title: Text('تعديل معلومات القابس الذكي',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF0390C3), letterSpacing: 2,
+            ),),
             leading: BackButton(
                 color: Color(0xFF535353)
             ),

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:log_in/screens/screens_device/list_device_smart_screen.dart';
 import 'package:log_in/screens/screens_home/home_screen.dart';
 import 'package:log_in/screens/screens_home/profile_page.dart';
 import 'package:log_in/utils/background_image_widget.dart';
@@ -26,6 +27,15 @@ class _ListBuildingScreen extends State<ListBuildingScreen> {
     super.initState();
   }
 
+
+   int _selectedIndex = 1;
+
+
+   void _onItemTap(int index) {
+     setState(() {
+       _selectedIndex = index;
+     });
+   }
 
 
   @override
@@ -72,8 +82,9 @@ class _ListBuildingScreen extends State<ListBuildingScreen> {
   ],
         ),
 
-          bottomNavigationBar:Padding(
-    padding: const EdgeInsets.only(right: 300.0,bottom: 30.0),
+          bottomNavigationBar:SingleChildScrollView(
+    child:Column(children: [
+    Padding(padding: const EdgeInsets.only(right: 300.0,bottom: 20.0,),
     child:FloatingActionButton(
           backgroundColor:Color(0xFF0390C3),
           onPressed: () {
@@ -87,6 +98,24 @@ class _ListBuildingScreen extends State<ListBuildingScreen> {
             color: Colors.white,),
         ),
            ),
+     /* BottomNavigationBar(
+        backgroundColor: Color(0xFF7F7F7F),
+        selectedItemColor: Color(0xFFFFC800),
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home,), label: 'الصفحة الرئيسية'),
+          BottomNavigationBarItem(icon: Icon(Icons.apps,), label: 'الاجهزة والقابس الذكي'),
+          BottomNavigationBarItem(icon: Icon(Icons.text_snippet,), label: 'تقرير استهلاك المبنى'),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTap,
+      ),*/
+
+
+    ]),
+          ),
+
+
+
 
         body:SafeArea(
           child: Padding(
@@ -99,26 +128,6 @@ class _ListBuildingScreen extends State<ListBuildingScreen> {
             child: BuildingList(user :u),
           ),
         ),
-
-       /* bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Color(0xFF0390C3),
-          selectedItemColor: Colors.white,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'الصفحة الرئيسية',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.message),
-              label: 'Message',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'الملف الشخصي',
-            ),
-          ],
-        ),*/
-
 
       ),
 

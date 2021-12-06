@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:log_in/screens/screens_building/edit_building_screen.dart';
 import 'package:log_in/screens/screens_device/list_device_smart_screen.dart';
 import 'package:log_in/utils/databaseBuilding.dart';
+import 'package:log_in/utils/utils_device/navigaion.dart';
 
 
 class BuildingList extends StatefulWidget {
@@ -26,7 +27,7 @@ class BuildingList extends StatefulWidget {
     @override
     Widget build(BuildContext context) {
       return StreamBuilder<QuerySnapshot>(
-        stream: DatabaseBuilding.readBuildings(userUid:u.uid),
+        stream: DatabaseBuilding.readBuildings(buildingOwnerId:u.uid),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Text('Something went wrong');
@@ -40,7 +41,7 @@ class BuildingList extends StatefulWidget {
                 var noteInfo = snapshot.data!.docs[index].data();
                 String docID = snapshot.data!.docs[index].id;
                 String nameBuilding = noteInfo['building_name'];
-                String typeBuilding = noteInfo['building_type'];
+                String typeBuilding = noteInfo['type'];
 
 
                
@@ -102,7 +103,7 @@ class BuildingList extends StatefulWidget {
 
                      onTap: () => Navigator.of(context).push(
                      MaterialPageRoute(
-                     builder: (context) => ListDeviceSmartScreen(
+                     builder: (context) => Navigation(
                       BuildingId: docID, user: u,
                     ),
                      ),

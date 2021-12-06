@@ -39,8 +39,7 @@ class _LinkedState extends State<Linked> {
                 appBar: AppBar(
                   elevation: 0,
                   centerTitle: true,
-                  title: const Text('ربط جهاز بقابس ذكي', style: TextStyle(
-                      color: Color(0xFF0390C3))),
+                  title: const Text('ربط جهاز بقابس ذكي', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF0390C3), letterSpacing: 2,),),
 
                   leading: BackButton(
                       color: Color(0xFF535353)
@@ -54,11 +53,11 @@ class _LinkedState extends State<Linked> {
                           children: const [
 
                             Padding(padding: EdgeInsets.only(left: 140 , top: 50.0),
-                              child: Text('ربط جهاز بقابس ذكي ', style: TextStyle(fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF0390C3),
-                                letterSpacing: 2,),),
-                            ),
+                             // child: Text('ربط جهاز بقابس ذكي ', style: TextStyle(fontSize: 24,
+                               // fontWeight: FontWeight.bold,
+                               // color: Color(0xFF0390C3),
+                               // letterSpacing: 2,),),
+                           ),
                           ]),
 
 
@@ -75,13 +74,11 @@ class _LinkedState extends State<Linked> {
                             ),
                           ]),
 
-                Center(
-                    child:
-
-                            StreamBuilder<QuerySnapshot>(
-                              stream: FirebaseFirestore.instance
-                                  .collection('Device')
-                                  .snapshots(),
+                                  SizedBox(height: 20.0),
+                               Padding(padding: EdgeInsets.only(right: 40,left: 40),
+                                 child: Center(
+                                 child: StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance.collection('Device').snapshots(),
                               builder: (BuildContext context,
                                   AsyncSnapshot<QuerySnapshot> snapshot) {
                                 // Safety check to ensure that snapshot contains data
@@ -91,21 +88,22 @@ class _LinkedState extends State<Linked> {
                                 // setDefault will change if an item was selected
                                 // First item from the List will be displayed
                                 if (setDefaultMake) {
-                                  carMake = snapshot.data?.docs[0].get('nameDevice');
+                                  carMake = snapshot.data?.docs[0].get('device_name');
                                   debugPrint('setDefault make: $carMake');
                                 }
                                 return DropdownButton(
                                   dropdownColor: Colors.white,
                                   style: TextStyle(color: Colors.black),
                                   iconEnabledColor:Color(0xFF0390C3),
-                                  isExpanded: false,
+                                  isExpanded: true,
+                                  isDense: true,
                                   value: carMake,
                                   items: snapshot.data?.docs.map((value) {
                                     return DropdownMenuItem(
-                                        value: value.get('nameDevice'),
+                                        value: value.get('device_name'),
                                         child: Container(
                                           alignment: Alignment.centerRight,
-                                          child: Text('${value.get('nameDevice')}'),
+                                          child: Text('${value.get('device_name')}',style: TextStyle(fontSize: 16)),
                                         ));
                                   }).toList(),
                                   onChanged: (value) {
@@ -122,12 +120,12 @@ class _LinkedState extends State<Linked> {
                                       },
                                     );
                                   },
-                                  hint:Text("                                                                                     "),
+
                                 );
                               },
                             ),
                             ),
-
+                               ),
 
 
 
@@ -142,11 +140,11 @@ class _LinkedState extends State<Linked> {
                                   ),
                                 ]),
 
-
-                            StreamBuilder<QuerySnapshot>(
-                              stream: FirebaseFirestore.instance
-                                  .collection('Smart_plug')
-                                  .snapshots(),
+                      SizedBox(height: 20.0),
+                         Padding(padding: EdgeInsets.only(right: 40,left: 40),
+                         child: Center(
+                           child:StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance.collection('SmartPlug').snapshots(),
                               builder: (BuildContext context,
                                   AsyncSnapshot<QuerySnapshot> snapshot) {
                                 // Safety check to ensure that snapshot contains data
@@ -156,24 +154,26 @@ class _LinkedState extends State<Linked> {
                                 // setDefault will change if an item was selected
                                 // First item from the List will be displayed
                                 if (setDefaultMake) {
-                                  carMakeModel = snapshot.data?.docs[0].get('plug_name');
+                                  carMakeModel = snapshot.data?.docs[0].get('smart_plug_name');
                                   debugPrint('setDefault make: $carMakeModel');
                                 }
                                 return DropdownButton(
                                   dropdownColor: Colors.white,
                                   style: TextStyle(color: Colors.black),
                                   iconEnabledColor:Color(0xFF0390C3),
-                                  isExpanded: false,
+                                  isExpanded: true,
+                                  isDense: true,
                                   value: carMakeModel,
                                   items: snapshot.data?.docs.map((value) {
                                     return DropdownMenuItem(
-                                        value: value.get('plug_name'),
+                                        value: value.get('smart_plug_name'),
                                         child: Container(
                                           alignment: Alignment.centerRight,
 
 
 
-                                          child: Text('${value.get('plug_name')}'),
+                                          child: Text('${value.get('smart_plug_name')}',style: TextStyle(fontSize: 16),),
+
                                         ));
                                   }).toList(),
                                   onChanged: (value) {
@@ -190,10 +190,12 @@ class _LinkedState extends State<Linked> {
                                       },
                                     );
                                   },
-                                  hint:Text("                                                                                     "),
+
                                 );
                               },
                             ),
+                         ),
+                         ),
 
                             Column(
                                 mainAxisAlignment: MainAxisAlignment.end,
@@ -211,7 +213,7 @@ class _LinkedState extends State<Linked> {
 
 
                             Center(
-                              child:Padding(padding: EdgeInsets.only(top: 30,left: 60.0, right: 60.0,),
+                              child:Padding(padding: EdgeInsets.only(top: 70,left: 60.0, right: 60.0,),
 
                                 child:Container(width: double.maxFinite,
 
@@ -228,7 +230,7 @@ class _LinkedState extends State<Linked> {
                                       ),
                                     ),
                                     onPressed: () async {
-                                      connect c=connect(carMake,carMakeModel);
+                                      connect c=connect(carMake,carMakeModel,context);
 
                                     },
                                     child: Padding(
@@ -269,7 +271,7 @@ class _LinkedState extends State<Linked> {
                                   ),
                                   onPressed: () async {
 
-                                    disconnect c=disconnect(carMake,carMakeModel);
+                                    disconnect c=disconnect(carMake,carMakeModel,context);
 
 
                                   },

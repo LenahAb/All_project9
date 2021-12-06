@@ -10,11 +10,11 @@ class DatabaseSmartPlug {
     required String nameSmart_plug,
     required String buildingId,
   }) async {
-    DocumentReference documentReferencer = firestore.collection('Smart_plug').doc();
+    DocumentReference documentReferencer = firestore.collection('SmartPlug').doc();
 
     Map<String, dynamic> data = <String, dynamic>{
-      "plug_name": nameSmart_plug,
-      "plug_id": documentReferencer.id,
+      "smart_plug_name": nameSmart_plug,
+      "smart_plug_id": documentReferencer.id,
       "building_id": firestore.doc('Building/'+buildingId),
     };
 
@@ -29,11 +29,11 @@ class DatabaseSmartPlug {
     required String nameSmart_plug,
     required String docId,
   }) async {
-    DocumentReference documentReferencer = firestore.collection('Smart_plug').doc(
+    DocumentReference documentReferencer = firestore.collection('SmartPlug').doc(
         docId);
 
     Map<String, dynamic> data = <String, dynamic>{
-      "plug_name": nameSmart_plug,
+      "smart_plug_name": nameSmart_plug,
     };
 
     await documentReferencer
@@ -47,7 +47,7 @@ class DatabaseSmartPlug {
       {required String buildingId,}
       ){
     DocumentReference doc3 = FirebaseFirestore.instance.doc('Building/' + buildingId);
-    return FirebaseFirestore.instance.collection("Smart_plug")
+    return FirebaseFirestore.instance.collection("SmartPlug")
         .where('building_id', isEqualTo:doc3 )
         .snapshots();
 
@@ -60,7 +60,7 @@ class DatabaseSmartPlug {
   static Future<void> deleteSmart({
     required String docId,
   }) async {
-    DocumentReference documentReferencer = firestore.collection('Smart_plug').doc(
+    DocumentReference documentReferencer = firestore.collection('SmartPlug').doc(
         docId);
 
     await documentReferencer

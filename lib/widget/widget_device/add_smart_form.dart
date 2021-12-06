@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:log_in/screens/screens_device/list_device_smart_screen.dart';
 import 'package:log_in/utils/custom_form_field.dart';
 import 'package:log_in/utils/utils_device/databaseSmart.dart';
+import 'package:log_in/utils/utils_device/navigaion.dart';
 import 'package:log_in/utils/validator.dart';
 
 
@@ -95,7 +96,7 @@ class _AddSmartForm extends State<AddSmartForm> {
           )
 
               : Center(child:
-          Padding(padding: EdgeInsets.only(top: 40,left: 40.0, right: 40.0,),
+          Padding(padding: EdgeInsets.only(top: 60,left: 40.0, right: 40.0,),
 
             child:Container(width: double.maxFinite,
 
@@ -127,7 +128,7 @@ class _AddSmartForm extends State<AddSmartForm> {
                     });
 
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => ListDeviceSmartScreen(BuildingId: widget.BuildingId, user:u,)
+                        builder: (context) => Navigation(BuildingId: widget.BuildingId, user:u,)
                     ),
                     );
 

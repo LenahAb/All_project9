@@ -22,12 +22,12 @@ class FireAuth {
       user = userCredential.user;
       await user!.updateProfile(displayName: name);
       await FirebaseFirestore.instance
-          .collection('users')
+          .collection('BuildingOwner')
           .doc(user.uid)
           .set({
         'name': name,
         'email': email,
-        'userUid':user.uid,
+        'building_owner_id':user.uid,
       });
 
       await user.reload();
@@ -74,7 +74,7 @@ class FireAuth {
     final user = FirebaseAuth.instance.currentUser;
     await user!.updateDisplayName(name);
     await FirebaseFirestore.instance
-        .collection('users')
+        .collection('BuildingOwner')
         .doc(user.uid)
         .update({
       'name': name,});

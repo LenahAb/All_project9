@@ -70,6 +70,7 @@ class _EditNameFormState extends State<EditNameForm> {
                           child: SizedBox(
                             height: 90.0,
                             child: CustomFormField(
+                              isLabelEnabled: true,
                               controller: controller,
                               focusNode: widget.FocusNodeName,
                               keyboardType: TextInputType.name,

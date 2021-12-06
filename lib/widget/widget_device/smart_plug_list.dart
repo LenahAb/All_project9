@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:log_in/screens/screens_device/edit_Smart_screen.dart';
 import 'package:log_in/screens/screens_device/linked.dart';
 import 'package:log_in/utils/utils_device/databaseSmart.dart';
@@ -18,6 +19,8 @@ class SmartPlugeList extends StatefulWidget {
 class _SmartPlugeList extends State<SmartPlugeList> {
 
 bool _isDeleting = false;
+
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -32,7 +35,7 @@ bool _isDeleting = false;
             itemBuilder: (context, index) {
               var noteInfo = snapshot.data!.docs[index].data();
               String docID = snapshot.data!.docs[index].id;
-              String nameSmart_plug = noteInfo['plug_name'];
+              String nameSmart_plug = noteInfo['smart_plug_name'];
 
 
 
@@ -75,6 +78,12 @@ bool _isDeleting = false;
                       child: Container(
                       alignment: Alignment.centerRight,
                           child: Text('حذف القابس الذكي    '),),
+                        ),
+                        PopupMenuItem(
+                          value: 3,
+                          child: Container(
+                            alignment: Alignment.centerRight,
+                            child: Text('اظاهر رقم القابس الذكي   '),),
                         )
                       ];
                     },
@@ -104,6 +113,11 @@ bool _isDeleting = false;
                         case 2:
                           _isDeleting = true;
                           showAlertDialog(context,docID);
+                          break;
+
+                        case 3:
+                          _isDeleting = true;
+                          showAlertDialogId(context,docID);
                           break;
                       }
                     },
@@ -193,6 +207,92 @@ bool _isDeleting = false;
       },
     );
   }
+
+
+void showAlertDialogId(BuildContext context, String doc) {
+  // set up the buttons
+
+  Widget cancelButton = SizedBox(
+      width: 140,
+      height: 45,
+      child:TextButton(
+          child: Text("الغاء",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold, color: Colors.blueAccent,),),
+          style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Color(0xD2EFEFEF))),
+          onPressed: () {
+            Navigator.of(context).pop();
+          }
+      )
+
+  );
+
+  Widget continueButton = SizedBox(
+      width: 140,
+      height: 45,
+      child:TextButton(
+          child: Text("نسخ",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold, color: Colors.green,),),
+          style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Color(0xD2EFEFEF))),
+          onPressed: () {
+            Clipboard.setData(ClipboardData(text: doc))
+                .then((value) { //only if ->
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(backgroundColor: Colors.lightGreen,
+                content: Text('تم النسخ بنجاح',style: TextStyle(fontSize: 18.0, color: Colors.black,), textAlign: TextAlign.right,),),);}); // -> show a notification
+            },
+
+
+      )
+
+  );
+
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    backgroundColor: Colors.white,
+    title: Text(" رقم القابس الذكي",
+      style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold, color: Colors.black),
+      textAlign: TextAlign.right,),
+
+    content: _containerAlert(doc),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
+
+Widget _containerAlert(String doc) {
+  return Container(
+    child: TextFormField(
+    initialValue: doc,
+      textAlign: TextAlign.right,
+      style: TextStyle(color: Colors.black),
+      cursorColor: Colors.black,
+      decoration: InputDecoration(
+
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8.0),
+        borderSide: BorderSide(
+          color: Colors.black.withOpacity(0.5),
+          width: 2,),),
+
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0),
+          borderSide: BorderSide(
+            color: Colors.black.withOpacity(0.5),),),
+
+      ),
+    ),
+
+  );
+}
 
 
 }

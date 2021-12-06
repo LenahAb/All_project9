@@ -10,18 +10,18 @@ class DatabaseBuilding {
 
 
   static Future<void> addBuilding({
-    required String nameDevice,
-    required String typeDevice,
-    required String userUid
+    required String nameBuilding,
+    required String typeBuilding,
+    required String buildingOwnerId,
   }) async {
 
     DocumentReference documentReferencer = firestore.collection('Building').doc();
 
     Map<String, dynamic> data = <String, dynamic>{
-      "building_name": nameDevice,
-      "building_type": typeDevice,
+      "building_name": nameBuilding,
+      "type": typeBuilding,
       "building_id": documentReferencer.id,
-      "userUid":firestore.doc('users/'+userUid),
+      "building_owner_id":firestore.doc('BuildingOwner/'+buildingOwnerId),
     };
 
     await documentReferencer
@@ -43,7 +43,7 @@ class DatabaseBuilding {
 
     Map<String, dynamic> data = <String, dynamic>{
       "building_name": nameBuilding,
-      "building_type": typeBuilding,
+      "type": typeBuilding,
     };
 
     await documentReferencer
@@ -56,11 +56,11 @@ class DatabaseBuilding {
 
 
   static Stream<QuerySnapshot> readBuildings ({
-  required String userUid
+  required String buildingOwnerId
   }){
-    DocumentReference doc3 = FirebaseFirestore.instance.doc('users/' + userUid);
+    DocumentReference doc3 = FirebaseFirestore.instance.doc('BuildingOwner/' + buildingOwnerId);
     return FirebaseFirestore.instance.collection("Building")
-        .where('userUid', isEqualTo:doc3 )
+        .where('building_owner_id', isEqualTo:doc3 )
         .snapshots();
   }
 

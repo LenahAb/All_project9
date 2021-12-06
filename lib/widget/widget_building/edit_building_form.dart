@@ -58,7 +58,15 @@ class _EditBuildingFormState extends State<EditBuildingForm> {
       child:SingleChildScrollView(
       child: Column(
         children: [
-          Padding(padding: const EdgeInsets.only(left: 8.0,right: 8.0, bottom: 24.0,top: 100.0),
+          Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+
+                Padding(padding: EdgeInsets.only(left: 140.0,top: 60.0),
+                  child: Text(' تعديل معلومات المبنى',style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF0390C3), letterSpacing: 2,),),
+                ),
+              ]),
+          Padding( padding: const EdgeInsets.only(left: 8.0,right: 8.0, bottom: 24.0,),
 
             child: Column(crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -89,39 +97,35 @@ class _EditBuildingFormState extends State<EditBuildingForm> {
                   ': نوع المبنى',
                   style: TextStyle(color: Colors.black, fontSize: 19.0, letterSpacing: 1,),
                 ),
-                DropdownButton(
+                SizedBox(height: 8.0),
+
+            Padding(padding: EdgeInsets.only(right: 20,left: 15),
+              child: DropdownButton(
+                  dropdownColor: Colors.white,
+                  style: TextStyle(color: Colors.black),
+                  iconEnabledColor:Color(0xFF0390C3),
                   isExpanded: true,
+                  isDense: true,
 
-
-
+                  /*
                   icon: Icon(Icons.arrow_drop_down,color: Colors.grey,),
 
-                  dropdownColor: Colors.white,
-                  isDense: true,
-                  // Reduces the dropdowns height by +/- 50%
+                  dropdownColor: Colors.white,*/
 
                   value: _selectedFruit,
                   items: BuildingType.map((item) {
-
                     return DropdownMenuItem(
                         value: item,
-
-
-
                         child: Container(
                           alignment: Alignment.centerRight,
-
-                          // height: 2,
-
-
-                          child:  Text(item),
+                          child:  Text(item,style: TextStyle(fontSize: 16),),
 
                         ));
                   }).toList(),
                   onChanged: (selectedItem) => setState(() => _selectedFruit = selectedItem,
                   ),
                 ),
-
+            ),
 
               ],
             ),
@@ -136,7 +140,7 @@ class _EditBuildingFormState extends State<EditBuildingForm> {
             valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF0390C3),),
           ),
           )
-              : Padding(padding: EdgeInsets.only(top: 40,left: 40.0, right: 40.0,),
+              : Padding(padding: EdgeInsets.only(top: 60,left: 40.0, right: 40.0,),
 
             child:Container(width: double.maxFinite,
 

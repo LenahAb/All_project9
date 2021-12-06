@@ -92,6 +92,7 @@ class _LogIn extends State<LogIn> {
                     child: SizedBox(
                       height: 90.0,
                        child: CustomFormField(
+                         isLabelEnabled: true,
                   controller: _emailTextController,
                   focusNode: _focusEmail,
                   keyboardType: TextInputType.emailAddress,
@@ -112,6 +113,7 @@ class _LogIn extends State<LogIn> {
                       child: SizedBox(
                         height: 90.0,
                      child:CustomFormField(
+                       isLabelEnabled: true,
                        controller: _passwordTextController,
                        focusNode: _focusPassword,
                        keyboardType: TextInputType.text,

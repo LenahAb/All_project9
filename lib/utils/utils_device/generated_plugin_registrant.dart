@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-var db=FirebaseFirestore.instance.collection("Device_Plug").doc();
+import 'package:flutter/material.dart';
+var db=FirebaseFirestore.instance.collection("Links").doc();
 var device;
 var smart;
 
@@ -10,32 +11,34 @@ class connect{
   String? device_id;
   String? plug_id;
 
-  connect(String device_id,String plug_id) {
+  connect(String device_id,String plug_id,BuildContext context) {
     this.device_id = device_id;
     this.plug_id = plug_id;
+
+
     device = FirebaseFirestore.instance.collection("Device");
     device.get().then((QuerySnapshot snapshot) {
       snapshot.docs.forEach((DocumentSnapshot doc) {
-        if (doc["nameDevice"] == device_id ) {
-          devid = doc["DeviseId"];
+        if (doc["device_name"] == device_id ) {
+          devid = doc["device_id"];
 
           debugPrint('najoud : $devid');
 
 
         }
-        smart = FirebaseFirestore.instance.collection("Smart_plug");
+        smart = FirebaseFirestore.instance.collection("SmartPlug");
         smart.get().then((QuerySnapshot snapshot) {
           snapshot.docs.forEach((DocumentSnapshot doc) {
-            if(doc["plug_name"] == plug_id){
-              plugid = doc["plug_id"];
+            if(doc["smart_plug_name"] == plug_id){
+              plugid = doc["smart_plug_id"];
               debugPrint('najoud : $plugid');
             }
 
             db.set({
-              "Device_Plug_id":db.id,
+              "link_id":db.id,
               "active":true,
-              "DeviseId":devid,
-              "plug_id":plug_id,
+              "device_id":devid,
+              "smart_plug_id":plug_id,
               "start_time":DateTime.now(),
 
             });
@@ -47,31 +50,51 @@ class connect{
         });
 
       });
-    }
-    );}
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.lightGreen,
+        duration: Duration(seconds:30),
+        //padding: EdgeInsets.only(right: 30.0),
+        action: SnackBarAction(
+            label: 'حسنًا',
+            textColor: Colors.white,
+            onPressed: () {
+            }),
+        content: Text(
+          // 'Your Password has been Changed. Login again !',
+          'تم ربط الجهاز بنجاح ',
+          style: TextStyle(fontSize: 18.0),
+          textAlign: TextAlign.right,
+        ),
+      ),
+    );
+
+
+  }
 }
 class disconnect{
   String? device_id;
   String? plug_id;
 
-  disconnect(String device_id,String plug_id) {
+  disconnect(String device_id,String plug_id,BuildContext context) {
     this.device_id = device_id;
     this.plug_id = plug_id;
     device = FirebaseFirestore.instance.collection("Device");
     device.get().then((QuerySnapshot snapshot) {
       snapshot.docs.forEach((DocumentSnapshot doc) {
-        if (doc["nameDevice"] == device_id ) {
-          devid = doc["DeviseId"];
+        if (doc["device_name"] == device_id ) {
+          devid = doc["device_id"];
 
           debugPrint('najoud : $devid');
 
 
         }
-        smart = FirebaseFirestore.instance.collection("Smart_plug");
+        smart = FirebaseFirestore.instance.collection("SmartPlug");
         smart.get().then((QuerySnapshot snapshot) {
           snapshot.docs.forEach((DocumentSnapshot doc) {
-            if(doc["plug_name"] == plug_id){
-              plugid = doc["plug_id"];
+            if(doc["smart_plug_name"] == plug_id){
+              plugid = doc["smart_plug_id"];
               debugPrint('najoud : $plugid');
             }
 
@@ -90,7 +113,28 @@ class disconnect{
       });
 
     });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.red,
+        duration: Duration(seconds:30),
+        //padding: EdgeInsets.only(right: 30.0),
+        action: SnackBarAction(
+            label: 'حسنًا',
+            textColor: Colors.white,
+            onPressed: () {
+            }),
+        content: Text(
+          // 'Your Password has been Changed. Login again !',
+          'تم إلغاء الربط الجهاز بنجاح ',
+          style: TextStyle(fontSize: 18.0),
+          textAlign: TextAlign.right,
+        ),
+      ),
+    );
+
   }
 }
+
 
 

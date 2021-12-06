@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:log_in/utils/background_image_widget.dart';
+import 'package:log_in/utils/utils_device/navigaion.dart';
 
 import 'add_device_screen.dart';
 import 'add_smart_screen.dart';
@@ -38,9 +39,21 @@ class _IconAdd extends State<IconAdd> {
     backgroundColor: Colors.transparent,
     appBar: AppBar(
     elevation: 0,
-    leading: BackButton(
-    color: Color(0xFF535353)
-    ),
+      leading: Builder(
+        builder: (BuildContext context) {
+          return IconButton(
+              icon: const Icon(Icons.arrow_back, color: Color(0xFF535353)),
+              onPressed: () async {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => Navigation(user: u, BuildingId: widget.BuildingId),
+                  ),
+                );
+              }
+          );
+        },
+
+      ),
     backgroundColor: Color(0xFFF5F8FA),
     ),
 
