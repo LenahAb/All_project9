@@ -51,7 +51,7 @@ class _EditSmartFormState extends State<EditSmartForm> {
             child: Column(crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 SizedBox(height: 24.0),
-                Text(': أسم الجهاز',
+                Text(': أسم القابس الذكي',
                   style: TextStyle(color: Colors.black, fontSize: 19.0, letterSpacing: 1,),),
                 SizedBox(height: 8.0),
 

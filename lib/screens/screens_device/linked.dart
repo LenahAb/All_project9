@@ -5,6 +5,11 @@ import 'package:log_in/utils/background_image_widget.dart';
 import 'package:log_in/utils/utils_device/generated_plugin_registrant.dart';
 
 class Linked extends StatefulWidget {
+  final String BuildingId;
+
+  Linked({
+    required this. BuildingId,
+  });
 
 
   @override
@@ -46,7 +51,9 @@ class _LinkedState extends State<Linked> {
                   ),
                   backgroundColor: const Color(0xFFF5F8FA),
                 ),
-                body: Column(
+                body:
+                SingleChildScrollView(
+                  child: Column(
                     children: [
                       Column(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -74,8 +81,15 @@ class _LinkedState extends State<Linked> {
                             ),
                           ]),
 
-                                  SizedBox(height: 20.0),
-                               Padding(padding: EdgeInsets.only(right: 40,left: 40),
+
+
+                      SizedBox(height: 20.0),
+                     Padding(padding: const EdgeInsets.only(left: 30.0,right: 30.0),
+                         child: Container(padding:  EdgeInsets.symmetric(horizontal: 10, vertical:13),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black38, width:1),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10)),
                                  child: Center(
                                  child: StreamBuilder<QuerySnapshot>(
                               stream: FirebaseFirestore.instance.collection('Device').snapshots(),
@@ -97,6 +111,8 @@ class _LinkedState extends State<Linked> {
                                   iconEnabledColor:Color(0xFF0390C3),
                                   isExpanded: true,
                                   isDense: true,
+                                  iconSize: 34,
+                                  underline: Container(),
                                   value: carMake,
                                   items: snapshot.data?.docs.map((value) {
                                     return DropdownMenuItem(
@@ -127,7 +143,7 @@ class _LinkedState extends State<Linked> {
                             ),
                                ),
 
-
+                     ),
 
                             Column(
                                 mainAxisAlignment: MainAxisAlignment.end,
@@ -140,8 +156,15 @@ class _LinkedState extends State<Linked> {
                                   ),
                                 ]),
 
+
+
                       SizedBox(height: 20.0),
-                         Padding(padding: EdgeInsets.only(right: 40,left: 40),
+                    Padding(padding: const EdgeInsets.only(left: 30.0,right: 30.0),
+                        child: Container(padding:  EdgeInsets.symmetric(horizontal: 10, vertical:13),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black38, width:1),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10)),
                          child: Center(
                            child:StreamBuilder<QuerySnapshot>(
                               stream: FirebaseFirestore.instance.collection('SmartPlug').snapshots(),
@@ -163,6 +186,8 @@ class _LinkedState extends State<Linked> {
                                   iconEnabledColor:Color(0xFF0390C3),
                                   isExpanded: true,
                                   isDense: true,
+                                  iconSize: 34,
+                                  underline: Container(),
                                   value: carMakeModel,
                                   items: snapshot.data?.docs.map((value) {
                                     return DropdownMenuItem(
@@ -196,7 +221,7 @@ class _LinkedState extends State<Linked> {
                             ),
                          ),
                          ),
-
+                    ),
                             Column(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: const [
@@ -213,9 +238,9 @@ class _LinkedState extends State<Linked> {
 
 
                             Center(
-                              child:Padding(padding: EdgeInsets.only(top: 70,left: 60.0, right: 60.0,),
+                              child:Padding(padding: EdgeInsets.only(top: 50,left: 60.0, right: 60.0,),
 
-                                child:Container(width: double.maxFinite,
+                                child:Container(width: MediaQuery.of(context).size.width / 2,
 
 
 
@@ -238,7 +263,7 @@ class _LinkedState extends State<Linked> {
                                       child: Text(
                                         'ربط الجهاز ',
                                         style: TextStyle(
-                                          fontSize: 20,
+                                          fontSize: 18,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white,
                                           letterSpacing: 2,
@@ -253,15 +278,17 @@ class _LinkedState extends State<Linked> {
 
 
                             ),
-                            Padding(padding: EdgeInsets.only(top: 30,left: 60.0, right: 60.0,),
+                            Padding(padding: EdgeInsets.only(top:15,left: 60.0, right: 60.0,),
 
-                              child:Container(width: double.maxFinite,
+                              child:Container(//width: MediaQuery.of(context).size.width / 2,
 
 
 
                                 child: ElevatedButton(
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(Colors.red,),
+
+
                                     shape: MaterialStateProperty.all(
                                       RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(10),
@@ -280,7 +307,7 @@ class _LinkedState extends State<Linked> {
                                     child: Text(
                                       'الغاء ربط الجهاز ',
                                       style: TextStyle(
-                                        fontSize: 20,
+                                        fontSize: 18,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white,
                                         letterSpacing: 2,
@@ -293,7 +320,7 @@ class _LinkedState extends State<Linked> {
 
 
                     ])
-
+                ),
 
             )));
   }}

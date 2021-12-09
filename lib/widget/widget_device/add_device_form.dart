@@ -91,7 +91,11 @@ class _AddDeviceForm extends State<AddDeviceForm> {
                 ),
 
                 SizedBox(height: 8.0),
-            Padding(padding: EdgeInsets.only(right: 20,left: 15),
+                Container(padding:  EdgeInsets.symmetric(horizontal: 10, vertical:15),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black38, width:1),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10)),
               child: Center(
                     child: StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance
@@ -116,6 +120,8 @@ class _AddDeviceForm extends State<AddDeviceForm> {
                           iconEnabledColor:Color(0xFF0390C3),
                           isExpanded: true,
                           isDense: true,
+                          iconSize: 34,
+                          underline: Container(),
                           value: typeDevice,
                           items: snapshot.data?.docs.map((value) {
                             return DropdownMenuItem(

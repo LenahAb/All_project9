@@ -94,7 +94,7 @@ class _DeviceList extends State<DeviceList> {
                         case 1:
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => Linked(),
+                              builder: (context) => Linked(BuildingId: widget.BuildingId),
                             ),
                           );
                           break;
@@ -109,7 +109,7 @@ class _DeviceList extends State<DeviceList> {
                   onTap: () => Navigator.of(context).push(
                   MaterialPageRoute(
                   builder: (context) => DisplayConsumption(
-                  uid: docID,
+                  deviceId: docID,
 
                   ),
                   ),

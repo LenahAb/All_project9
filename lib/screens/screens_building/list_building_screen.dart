@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:log_in/screens/screens_device/list_device_smart_screen.dart';
@@ -25,17 +26,28 @@ class _ListBuildingScreen extends State<ListBuildingScreen> {
   void initState() {
     u = widget.user ;
     super.initState();
+    getBuildingData();
   }
 
+   bool loading = true;
+   bool empty=false;
 
-   int _selectedIndex = 1;
+   void getBuildingData() async {
+     await FirebaseFirestore.instance.collection('Building').doc('BuildingOwner/'+ u.uid).get().then((value) {
+       if (value.exists) {
 
 
-   void _onItemTap(int index) {
+
+       }
+      else {
      setState(() {
-       _selectedIndex = index;
+     empty=true;
+     loading = false;
+     });
+     }
      });
    }
+
 
 
   @override
@@ -117,7 +129,13 @@ class _ListBuildingScreen extends State<ListBuildingScreen> {
 
 
 
-        body:SafeArea(
+        body:/*loading
+            ? Center(child: CircularProgressIndicator()): empty? Center(child:Text('رجاءً أضف مبنى',  style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 22,
+         ),))
+            : Theme(data:ThemeData.light(),
+       child: */SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(
               top:16.0,
@@ -130,7 +148,7 @@ class _ListBuildingScreen extends State<ListBuildingScreen> {
         ),
 
       ),
-
+  //),
     );
   }
 

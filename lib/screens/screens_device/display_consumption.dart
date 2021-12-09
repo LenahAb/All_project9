@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:log_in/utils/background_image_widget.dart';
 
 
 
@@ -9,9 +10,9 @@ class DisplayConsumption extends StatefulWidget {
 
 
   // تحديد document الخاص بالجهاز
-  final String uid;
+  final String deviceId;
 
-  DisplayConsumption({required this.uid});
+  DisplayConsumption({required this.deviceId});
 
   @override
   _DisplayConsumptionState createState() => _DisplayConsumptionState();
@@ -48,19 +49,26 @@ class _DisplayConsumptionState extends State<DisplayConsumption> {
   String docName = '' ;
   List<String> itsName = [] ;
 
+  String deviceName = '';
 
-  Future<Map<String,dynamic>?> getIdType()async{
-    await  FirebaseFirestore.instance
-        .collection(collectionName).doc(widget.uid).get().then((value){
-      if(mounted){
-        setState(() {
-          docName = value.data()!['device_type'].toString();
-          itsName =  docName.split('/');
-          if (itsName[1] != null && itsName[1].length > 0) {
-            itsName[1] = itsName[1].substring(0, itsName[1].length - 1);
-          }
 
-        });
+  Future<Map<String, dynamic>?> getIdType() async {
+    await FirebaseFirestore.instance
+        .collection(collectionName)
+        .doc(widget.deviceId)
+        .get()
+        .then((value) {
+      if (value.exists) {
+        if (mounted) {
+          setState(() {
+            deviceName = value.data()!['device_name'];
+            docName = value.data()!['device_type'].toString();
+            itsName = docName.split('/');
+            if (itsName[1].isNotEmpty) {
+              itsName[1] = itsName[1].substring(0, itsName[1].length - 1);
+            }
+          });
+        }
       }
 
       print(value.data()!['device_type'].toString());
@@ -68,89 +76,99 @@ class _DisplayConsumptionState extends State<DisplayConsumption> {
       print('******* ${itsName[1]} *****mm');
     });
 
-
-    await FirebaseFirestore.instance.collection('DeviceType').doc(itsName[1]).get().then((value){
-
-      setState(() {
-        range = value.data()!['range'];
-      });
+    await FirebaseFirestore.instance
+        .collection('Type')
+        .doc(itsName[1])
+        .get()
+        .then((value) {
+      if (value.exists) {
+        setState(() {
+          range = value.data()!['range'];
+        });
+      } else {
+        print('empty1');
+      }
 
       print('RANGE IS ******** $range');
-    } );
-
-
+    });
   }
-
 
   // جعل قيمة الإستلاهك الحالي real Time
 
-  void theCurrentlyRef()
-  {
-
+  void theCurrentlyRef() {
     // تنفيذ دالة جلب احدث البيانات
     FirebaseFirestore.instance
-        .collection(collectionName).doc(widget.uid).get().then((value) {
-
-      if(mounted){
-        setState(() {
-          currentlyRef = value['active_consumption'];
-        });
+        .collection(collectionName)
+        .doc(widget.deviceId)
+        .get()
+        .then((value) {
+      if (value.exists) {
+        if (mounted) {
+          setState(() {
+            currentlyRef = value['active_consumption'];
+          });
+        }
       }
-
     });
-
   }
 
   var selectedDay;
-  // جعل قيمة الإستلاهك اليومي real Time
-  void theDailyRef(){
-    dailyRef = FirebaseFirestore.instance.collection(collectionName)
-        .doc(widget.uid).collection(dailyConsump);
-
-    /*dailyRef = FirebaseFirestore.instance
-        .collection(collectionName).doc(widget.uid).collection(dailyConsump)
-        .withConverter<TheAmount>(
-      fromFirestore: (snapshots, _) => TheAmount.fromJson(snapshots.data()!),
-      toFirestore: (movie, _) => movie.toJson(),
-    );*/
-
+  // جعل قيمة الإستهلاك اليومي real Time
+  void theDailyRef() async {
+    dailyRef = FirebaseFirestore.instance
+        .collection(collectionName)
+        .doc(widget.deviceId)
+        .collection(dailyConsump)
+        .get()
+        .asStream();
 
     FirebaseFirestore.instance
-        .collection(collectionName).doc(widget.uid).collection(dailyConsump).get().then((value) {
-      if(mounted){
-        setState(() {
-          selectedDay = value.docs.first.id;
-        });
+        .collection(collectionName)
+        .doc(widget.deviceId)
+        .collection(dailyConsump)
+        .get()
+        .then((value) {
+      if (value.docs.isNotEmpty) {
+        if (mounted) {
+          setState(() {
+            selectedDay = value.docs.first.id;
+          });
+        }
+      } else {
+        print('empty');
       }
     });
-
   }
 
   var selectedMonth;
   // جعل قيمة الإستلاهك الشهري real Time
-  void theMonthlyRef(){
-
+  void theMonthlyRef() {
     monthlyRef = FirebaseFirestore.instance
-        .collection(collectionName).doc(widget.uid).collection(monthlyConsump);
-        /*.withConverter<TheAmount>(
-      fromFirestore: (snapshots, _) => TheAmount.fromJson(snapshots.data()!),
-      toFirestore: (movie, _) => movie.toJson(),
-
-    );*/
+        .collection(collectionName)
+        .doc(widget.deviceId)
+        .collection(monthlyConsump)
+        .get()
+        .asStream();
 
     FirebaseFirestore.instance
-        .collection(collectionName).doc(widget.uid).collection(monthlyConsump).get().then((value) {
-      if(mounted){
-        setState(() {
-          selectedMonth = value.docs.first.id;
-        });
+        .collection(collectionName)
+        .doc(widget.deviceId)
+        .collection(monthlyConsump)
+        .get()
+        .then((value) {
+      if (value.docs.isNotEmpty) {
+        if (mounted) {
+          setState(() {
+            selectedMonth = value.docs.first.id;
+          });
+        }
+      } else {
+        print('empty');
       }
     });
-
   }
 
   bool isOverCons = false;
-
 
   // هذه الدالة تستدعي ما بداخلها بمجرد فتح الصفحة
   @override
@@ -163,7 +181,6 @@ class _DisplayConsumptionState extends State<DisplayConsumption> {
     theCurrentlyRef();
     theDailyRef();
     theMonthlyRef();
-
   }
 
   @override
@@ -174,19 +191,23 @@ class _DisplayConsumptionState extends State<DisplayConsumption> {
 
   @override
   Widget build(BuildContext context) {
-
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
+    backgroundColor: Colors.transparent,
+
       appBar: AppBar(
+        backgroundColor: Color(0xFFF5F8FA),
+        centerTitle: true,
         elevation: 0,
-        leading: BackButton(
-        color: Color(0xFF535353)
-    ),
-    backgroundColor: Color(0xFFF5F8FA),
-    centerTitle: true,
-    title: Text('استهلاك الجهاز',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF0390C3), letterSpacing: 2,),),
+        title: Text(
+          'استهلاك $deviceName ',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF0390C3), letterSpacing: 2,)
         ),
+        leading: BackButton(
+            color: Color(0xFF535353)
+        ),
+      ),
 
 
 
@@ -197,23 +218,16 @@ class _DisplayConsumptionState extends State<DisplayConsumption> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-
             //  تنفيذ طباعة قيمة الاستهلاك الحالي
             Builder(
-              builder: (context){
-
-
+              builder: (context) {
                 theCurrentlyRef();
 
-
                 WidgetsBinding.instance!.addPostFrameCallback((_) {
-
-                  currentlyRef >= range ? isOverCons = true : isOverCons = false ;
+                  currentlyRef >= range
+                      ? isOverCons = true
+                      : isOverCons = false;
                 });
-
-
-
-
 
 /*
 
@@ -231,8 +245,8 @@ class _DisplayConsumptionState extends State<DisplayConsumption> {
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          Colors.blue.withOpacity(0.7),
-                          Colors.blue.withOpacity(0.4)
+                          Color(0xFF0390C3).withOpacity(0.7),
+                          Color(0xFF0390C3).withOpacity(0.4)
                         ],
                       )),
                   child: Column(
@@ -247,7 +261,7 @@ class _DisplayConsumptionState extends State<DisplayConsumption> {
                       ),
                       Text(
                         currentlyRef.toString(),
-                        style:const TextStyle(
+                        style: const TextStyle(
                             color: Colors.white,
                             fontSize: 25,
                             fontWeight: FontWeight.bold),
@@ -258,12 +272,10 @@ class _DisplayConsumptionState extends State<DisplayConsumption> {
               },
             ),
 
-
             //  تنفيذ طباعة قيمة الاستهلاك اليومي
             StreamBuilder<QuerySnapshot>(
-              stream: dailyRef.snapshots(),
-              builder: (context,snapshot){
-
+              stream: dailyRef,
+              builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return Center(
                     child: Text(snapshot.error.toString()),
@@ -275,80 +287,78 @@ class _DisplayConsumptionState extends State<DisplayConsumption> {
                 }
 
                 final data = snapshot.requireData;
+                if (data.docs.isNotEmpty) {
+                  if (dailyConsumpList == null) {
+                    dailyConsumpList = List.filled(
+                        5, data.docs.last.data()['amount'],
+                        growable: true);
+                  } else {
+                    dailyConsumpList!.add(data.docs.last.data()['amount']);
+                    dailyConsumpList!.removeAt(0);
+                  }
 
-                if (dailyConsumpList == null) {
-                  dailyConsumpList = List.filled(5, data.docs.last.data(),
-                      growable: true);
+                  return Container(
+                    padding: const EdgeInsets.all(20),
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(' الاستهلاك اليومي ل $deviceName',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                            textDirection: TextDirection.rtl),
+                        const Divider(
+                          thickness: 1.5,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          width: double.infinity,
+                          height: 40,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 3, horizontal: 7),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
+                              color: Color(0xFF0390C3),
+                              width: 1.5,
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                data.docs.last.data()['amount'].toString(),
+                                style: const TextStyle(
+                                    fontSize: 16, color: Colors.grey),
+                              ),
+                              Text(
+                                selectedDay.toString(),
+                                style: const TextStyle(
+                                    fontSize: 16, color: Colors.grey),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
                 } else {
-                  dailyConsumpList!.add(data.docs.last.data());
-                  dailyConsumpList!.removeAt(0);
+                  return Container();
                 }
 
-
                 //data.docs.last.data().amount.toString()
-
-                return  Container(
-                  padding: const EdgeInsets.all(20),
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      const Text(' الاستهلاك اليومي ',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                          textDirection: TextDirection.rtl),
-                      const Divider(
-                        thickness: 1.5,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        width: double.infinity,
-                        height: 40,
-                        padding: const EdgeInsets.symmetric(vertical: 3,horizontal: 7),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                            color: Colors.blue,
-                            width: 1.5,
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              data.docs.last.data().toString(),
-                              style:const TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.grey
-                              ),
-                            ),
-                            Text(
-                              selectedDay.toString(),
-                              style:const TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.grey
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                );
               },
             ),
 
-
             //تنفيذ طباعة قيمة الاستهلاك الشهري
             StreamBuilder<QuerySnapshot>(
-              stream: monthlyRef.snapshots(),
-              builder: (context,snapshot){
-
+              stream: monthlyRef,
+              builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return Center(
                     child: Text(snapshot.error.toString()),
@@ -361,97 +371,97 @@ class _DisplayConsumptionState extends State<DisplayConsumption> {
 
                 final data = snapshot.requireData;
 
-                if (monthlyConsumpList == null) {
-                  monthlyConsumpList = List.filled(5, data.docs.last.data(),
-                      growable: true);
+                if (data.docs.isNotEmpty) {
+                  if (monthlyConsumpList == null) {
+                    monthlyConsumpList = List.filled(
+                        5, data.docs.last.data()['amount'],
+                        growable: true);
+                  } else {
+                    monthlyConsumpList!.add(data.docs.last.data()['amount']);
+                    monthlyConsumpList!.removeAt(0);
+                  }
+
+                  return Container(
+                    padding: const EdgeInsets.all(20),
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(' الاستهلاك الشهري ل $deviceName',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                            textDirection: TextDirection.rtl),
+                        const Divider(
+                          thickness: 1.5,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          width: double.infinity,
+                          height: 40,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 3, horizontal: 7),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
+                              color: Color(0xFF0390C3),
+                              width: 1.5,
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                data.docs.last.data()['amount'].toString(),
+                                style: const TextStyle(
+                                    fontSize: 16, color: Colors.grey),
+                              ),
+                              Text(
+                                selectedMonth.toString(),
+                                style: const TextStyle(
+                                    fontSize: 16, color: Colors.grey),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
                 } else {
-                  monthlyConsumpList!.add(data.docs.last.data());
-                  monthlyConsumpList!.removeAt(0);
+                  return Container();
                 }
-
-
-                return Container(
-                  padding: const EdgeInsets.all(20),
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      const Text(' الاستهلاك الشهري ',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                          textDirection: TextDirection.rtl),
-                      const Divider(
-                        thickness: 1.5,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        width: double.infinity,
-                        height: 40,
-                        padding: const EdgeInsets.symmetric(vertical: 3,horizontal: 7),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                            color: Colors.blue,
-                            width: 1.5,
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              data.docs.last.data().toString(),
-                              style:const TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.grey
-                              ),
-                            ),
-                            Text(
-                              selectedMonth.toString(),
-                              style:const TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.grey
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                );
               },
             ),
 
             const Spacer(),
 
-
             Container(
               width: double.infinity,
               height: 80,
               decoration: BoxDecoration(
-                  color:isOverCons ? Colors.redAccent : Colors.yellowAccent[100],
-                  border: Border.all(width: 2)
-              ),
+                  color:
+                  isOverCons ? Colors.red[400] : Colors.lightGreen[400],
+                 // border: Border.all(width: 2)
+                ),
               child: Center(
                 child: Text(
-                  isOverCons ? 'الإستهلاك لهذه الجهاز يستهلك الحد الطبيعي' : 'الإستهلاك لهذا الجهاز في حدود الاستلاك الطبيعي',
+                  isOverCons
+
+                      ? 'الإستهلاك ل $deviceName يستهلك الحد الطبيعي'
+                      : 'الإستهلاك ل $deviceName في حدود الإستهلاك الطبيعي',
                   style: TextStyle(
-                      color:isOverCons? Colors.white : Colors.red,
-                      fontSize: 22
-                  ),
+                      color: isOverCons ? Colors.white : Colors.black,
+                      fontSize: 18),
                 ),
               ),
             ),
-
           ],
         ),
       ),
     );
-
-
   }
 }

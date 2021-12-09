@@ -38,10 +38,15 @@ class _AddDeviceForm extends State<AddBuildingForm> {
     'سكني',
     'تجاري',
     'صناعي',
-
+    'حكومي',
+    'زراعي',
+    'خيري',
+    'خاص',
   ];
   var _selectedFruit;
-  late bool setDefaultMake=true;
+  var setDefaultMake = true, setDefaultMakeModel = true;
+
+
 
 
   final TextEditingController _nameDeviceController = TextEditingController();
@@ -57,6 +62,7 @@ class _AddDeviceForm extends State<AddBuildingForm> {
           Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+
 
                Padding(padding: EdgeInsets.only(left: 230.0,top: 60.0),
                   child: Text(' إضافة مبنى',style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF0390C3), letterSpacing: 2,),),
@@ -98,7 +104,6 @@ class _AddDeviceForm extends State<AddBuildingForm> {
 
 
 
-
                 SizedBox(height: 8.0),
 
 
@@ -114,19 +119,23 @@ class _AddDeviceForm extends State<AddBuildingForm> {
                  //child: DropdownButtonHideUnderline(
 
 
-        Padding(padding: EdgeInsets.only(right: 20,left: 15),
-          child: DropdownButton(
+        Container(padding:  EdgeInsets.symmetric(horizontal: 10, vertical:15),
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.black38, width:1),
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10)),
+            child:  DropdownButton(
                   dropdownColor: Colors.white,
                   style: TextStyle(color: Colors.black),
                   iconEnabledColor:Color(0xFF0390C3),
                   isExpanded: true,
                   isDense: true,
-
+                  iconSize: 34,
+                  underline: Container(),
                  /*
                   icon: Icon(Icons.arrow_drop_down,color: Colors.grey,),
 
                   dropdownColor: Colors.white,*/
-
 
                   value: _selectedFruit,
                   items: BuildingType.map((item) {
@@ -141,13 +150,17 @@ class _AddDeviceForm extends State<AddBuildingForm> {
                         ));
                   }).toList(),
                   onChanged: (selectedItem) => setState(() {
+
                     _selectedFruit = selectedItem;
+
+
+
                     }
                   ),
                   //hint:Text("                                                                                     "),
-                ),
-        ),
 
+        ),
+        ),
               ],
           ),
             ),

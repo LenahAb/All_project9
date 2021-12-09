@@ -43,8 +43,7 @@ class _AddBuildingScreenState extends State<AddBuildingScreen> {
           ),
 
 
-          body: SafeArea(
-            child: Padding(
+          body: SafeArea(child: Padding(
               padding: const EdgeInsets.only(
                 left: 16.0,
                 right: 16.0,
@@ -57,6 +56,7 @@ class _AddBuildingScreenState extends State<AddBuildingScreen> {
               ),
             ),
           ),
+
         ),
       ),
     );

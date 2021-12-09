@@ -105,7 +105,7 @@ bool _isDeleting = false;
                         case 1:
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => Linked(),
+                              builder: (context) => Linked(BuildingId: widget.BuildingId),
                             ),
                           );
                           break;
