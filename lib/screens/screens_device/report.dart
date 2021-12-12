@@ -278,7 +278,7 @@ class _ReportState extends State<Report> {
                     children: [
                       Text('الاستهلاك الشهري لأجهزة $buildingName',
                           style: TextStyle(
-                            color: Colors.grey,
+                            color: Color(0xFF0390C3),
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
                           ),
@@ -333,7 +333,7 @@ class _ReportState extends State<Report> {
                     children: [
                       Text('تكلفة الاستهلاك الشهري ل $buildingName',
                           style: TextStyle(
-                            color: Colors.grey,
+                            color: Color(0xFF0390C3),
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
                           ),

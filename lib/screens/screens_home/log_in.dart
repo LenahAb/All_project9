@@ -74,7 +74,7 @@ class _LogIn extends State<LogIn> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       SizedBox(height: 25.0),
-                      Padding(padding: EdgeInsets.only(left: 200.0,top: 60.0),
+                      Padding(padding: EdgeInsets.only(left: 150.0,top: 60.0),
                         child: Text(' تسجيل الدخول',style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF0390C3), letterSpacing: 2,),),
                       ),
                       Padding(padding: EdgeInsets.only(left:140.0, ),
@@ -198,19 +198,21 @@ class _LogIn extends State<LogIn> {
                                 print("No user found for that email");
                                 ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                backgroundColor: Colors.orangeAccent,
-                                  duration: Duration(seconds: 1000),
+                                backgroundColor: Colors.red[400],
+                                  duration: Duration(seconds: 15),
+                                  //behavior: SnackBarBehavior.floating,
+                                 // width: 300,
                                   //padding: EdgeInsets.only(right: 30.0),
                                   action: SnackBarAction(
-                                      label: 'حسنًا',
-                                      textColor: Colors.white,
+                                      label: 'X',
+                                      textColor: Colors.black,
                                       onPressed: () {
                                       }),
                                  content: Text(
                                  "لم يتم العثور على مستخدم لهذا البريد الإلكتروني",
                                  //'لم يتم العثور على المستخدم '
                                  style: TextStyle(
-                                   fontSize: 18.0, color: Colors.black,),
+                                   fontSize: 18.0, color: Colors.white,),
                                    textAlign: TextAlign.right,
                                   ),),);
 
@@ -218,18 +220,18 @@ class _LogIn extends State<LogIn> {
                                     print("Wrong password provided");
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
-                                      backgroundColor: Colors.orangeAccent,
-                                        duration: Duration(seconds: 1000),
+                                      backgroundColor: Colors.red[400],
+                                        duration: Duration(seconds: 15),
                                         //padding: EdgeInsets.only(right: 30.0),
                                         action: SnackBarAction(
-                                            label: 'حسنًا',
-                                            textColor: Colors.white,
+                                            label: 'X',
+                                            textColor: Colors.black,
                                             onPressed: () {
                                             }),
                                       content: Text(
-                                      "كلمة المرور خاطئة",
+                                      "كلمة المرور المدخلة غير صحيحة",
                                       style: TextStyle(
-                                          fontSize: 18.0, color: Colors.black), textAlign: TextAlign.right,
+                                          fontSize: 18.0, color: Colors.white,), textAlign: TextAlign.right,
                                       ),),);
 
 
@@ -237,18 +239,18 @@ class _LogIn extends State<LogIn> {
                                   print("User with this email has been disabled");
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                      backgroundColor: Colors.orangeAccent,
-                                      duration: Duration(seconds: 1000),
+                                      backgroundColor: Colors.red[400],
+                                      duration: Duration(seconds: 15),
                                       //padding: EdgeInsets.only(right: 30.0),
                                       action: SnackBarAction(
-                                          label: 'حسنًا',
-                                          textColor: Colors.white,
+                                          label: 'X',
+                                          textColor: Colors.black,
                                           onPressed: () {
                                           }),
                                       content: Text(
                                         "تم تعطيل المستخدم لهذا البريد الإلكتروني ",
                                         style: TextStyle(
-                                            fontSize: 18.0, color: Colors.black), textAlign: TextAlign.right,
+                                            fontSize: 18.0, color: Colors.white), textAlign: TextAlign.right,
                                       ),),);
 
 
@@ -256,18 +258,18 @@ class _LogIn extends State<LogIn> {
                                   print("Signing in with Email and Password is not enabled");
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                      backgroundColor: Colors.orangeAccent,
-                                      duration: Duration(seconds: 1000),
+                                      backgroundColor: Colors.red[400],
+                                      duration: Duration(seconds: 15),
                                       //padding: EdgeInsets.only(right: 30.0),
                                       action: SnackBarAction(
-                                          label: 'حسنًا',
-                                          textColor: Colors.white,
+                                          label: 'X',
+                                          textColor: Colors.black,
                                           onPressed: () {
                                           }),
                                       content: Text(
                                         "لم يتم تمكين تسجيل الدخول باستخدام البريد الإلكتروني وكلمة المرور",
                                         style: TextStyle(
-                                            fontSize: 18.0, color: Colors.black), textAlign: TextAlign.right,
+                                            fontSize: 18.0, color: Colors.white), textAlign: TextAlign.right,
                                       ),),);
 
 
@@ -275,18 +277,18 @@ class _LogIn extends State<LogIn> {
                                   print("Too many requests. Try again later");
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                      backgroundColor: Colors.orangeAccent,
-                                      duration: Duration(seconds: 1000),
+                                      backgroundColor: Colors.red[400],
+                                      duration: Duration(seconds: 15),
                                       //padding: EdgeInsets.only(right: 30.0),
                                       action: SnackBarAction(
-                                          label: 'حسنًا',
-                                          textColor: Colors.white,
+                                          label: 'X',
+                                          textColor: Colors.black,
                                           onPressed: () {
                                           }),
                                       content: Text(
                                         "طلبات كثيرة جدا. حاول مرة أخرى في وقت لاحق",
                                         style: TextStyle(
-                                            fontSize: 18.0, color: Colors.black), textAlign: TextAlign.right,
+                                            fontSize: 18.0, color: Colors.white), textAlign: TextAlign.right,
                                       ),),);
                                 }
                           } catch (e) {

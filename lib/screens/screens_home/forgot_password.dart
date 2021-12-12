@@ -134,10 +134,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       backgroundColor: Colors.lightGreen,
-                                      duration: Duration(seconds: 30),
+                                      duration: Duration(seconds: 15),
                                       content: Text(
                                         //'Password Reset Email has been sent !',
-                                        'تم إرسال إلى البريد الإلكتروني الخاص بك لإعادة تعيين كلمة المرور',
+                                        'تم إرسال إلى البريد الإلكتروني الخاص بك رابط لإعادة تعيين كلمة المرور',
                                         style: TextStyle(fontSize: 18.0),
                                           textAlign: TextAlign.right,
                                       ),
@@ -149,19 +149,19 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                     print("No user found for that email");
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
-                                        backgroundColor: Colors.orangeAccent,
-                                        duration: Duration(seconds: 1000),
+                                        backgroundColor: Colors.red[400],
+                                        duration: Duration(seconds: 15),
                                         //padding: EdgeInsets.only(right: 30.0),
                                         action: SnackBarAction(
-                                            label: 'حسنًا',
-                                            textColor: Colors.white,
+                                            label: 'X',
+                                            textColor: Colors.black,
                                             onPressed: () {
                                             }),
                                         content: Text(
                                           "لم يتم العثور على مستخدم لهذا البريد الإلكتروني",
                                           style: TextStyle(
                                               fontSize: 18.0,
-                                              color: Colors.black),
+                                              color: Colors.white),
                                             textAlign: TextAlign.right,
                                         ),),);
                                   }

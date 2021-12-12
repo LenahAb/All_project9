@@ -17,8 +17,8 @@ class Linked extends StatefulWidget {
 }
 
 class _LinkedState extends State<Linked> {
-  var carMake;
-  var carMakeModel;
+  var DeviceList;
+  var SmartPlugList;
   var setDefaultMake = true, setDefaultMakeModel = true;
 
 
@@ -92,7 +92,10 @@ class _LinkedState extends State<Linked> {
                             borderRadius: BorderRadius.circular(10)),
                                  child: Center(
                                  child: StreamBuilder<QuerySnapshot>(
-                              stream: FirebaseFirestore.instance.collection('Device').snapshots(),
+                              stream: //FirebaseFirestore.instance.collection('Device').snapshots(),
+                                     FirebaseFirestore.instance.collection("Device")
+                                         .where('building_id', isEqualTo:FirebaseFirestore.instance.doc('Building/' + widget.BuildingId))
+                                         .snapshots(),
                               builder: (BuildContext context,
                                   AsyncSnapshot<QuerySnapshot> snapshot) {
                                 // Safety check to ensure that snapshot contains data
@@ -102,8 +105,8 @@ class _LinkedState extends State<Linked> {
                                 // setDefault will change if an item was selected
                                 // First item from the List will be displayed
                                 if (setDefaultMake) {
-                                  carMake = snapshot.data?.docs[0].get('device_name');
-                                  debugPrint('setDefault make: $carMake');
+                                  DeviceList = snapshot.data?.docs[0].get('device_name');
+                                  debugPrint('setDefault : $DeviceList');
                                 }
                                 return DropdownButton(
                                   dropdownColor: Colors.white,
@@ -113,7 +116,7 @@ class _LinkedState extends State<Linked> {
                                   isDense: true,
                                   iconSize: 34,
                                   underline: Container(),
-                                  value: carMake,
+                                  value: DeviceList,
                                   items: snapshot.data?.docs.map((value) {
                                     return DropdownMenuItem(
                                         value: value.get('device_name'),
@@ -126,9 +129,9 @@ class _LinkedState extends State<Linked> {
                                     debugPrint('selected onchange: $value');
                                     setState(
                                           () {
-                                        debugPrint('make selected: $value');
+                                        debugPrint('selected: $value');
                                         // Selected value will be stored
-                                        carMake = value;
+                                        DeviceList = value;
                                         // Default dropdown value won't be displayed anymore
                                         setDefaultMake = false;
                                         // Set makeModel to true to display first car from list
@@ -167,7 +170,10 @@ class _LinkedState extends State<Linked> {
                             borderRadius: BorderRadius.circular(10)),
                          child: Center(
                            child:StreamBuilder<QuerySnapshot>(
-                              stream: FirebaseFirestore.instance.collection('SmartPlug').snapshots(),
+                              stream: //FirebaseFirestore.instance.collection('SmartPlug').snapshots(),
+                              FirebaseFirestore.instance.collection("SmartPlug")
+                                  .where('building_id', isEqualTo:FirebaseFirestore.instance.doc('Building/' + widget.BuildingId))
+                                  .snapshots(),
                               builder: (BuildContext context,
                                   AsyncSnapshot<QuerySnapshot> snapshot) {
                                 // Safety check to ensure that snapshot contains data
@@ -177,8 +183,8 @@ class _LinkedState extends State<Linked> {
                                 // setDefault will change if an item was selected
                                 // First item from the List will be displayed
                                 if (setDefaultMake) {
-                                  carMakeModel = snapshot.data?.docs[0].get('smart_plug_name');
-                                  debugPrint('setDefault make: $carMakeModel');
+                                  SmartPlugList = snapshot.data?.docs[0].get('smart_plug_name');
+                                  debugPrint('setDefault : $SmartPlugList');
                                 }
                                 return DropdownButton(
                                   dropdownColor: Colors.white,
@@ -188,7 +194,7 @@ class _LinkedState extends State<Linked> {
                                   isDense: true,
                                   iconSize: 34,
                                   underline: Container(),
-                                  value: carMakeModel,
+                                  value: SmartPlugList,
                                   items: snapshot.data?.docs.map((value) {
                                     return DropdownMenuItem(
                                         value: value.get('smart_plug_name'),
@@ -207,7 +213,7 @@ class _LinkedState extends State<Linked> {
                                           () {
                                         debugPrint('make selected: $value');
                                         // Selected value will be stored
-                                        carMakeModel = value;
+                                        SmartPlugList = value;
                                         // Default dropdown value won't be displayed anymore
                                         setDefaultMake = false;
                                         // Set makeModel to true to display first car from list
@@ -255,7 +261,7 @@ class _LinkedState extends State<Linked> {
                                       ),
                                     ),
                                     onPressed: () async {
-                                      connect c=connect(carMake,carMakeModel,context);
+                                      connect c=connect(DeviceList,SmartPlugList,context);
 
                                     },
                                     child: Padding(
@@ -280,7 +286,7 @@ class _LinkedState extends State<Linked> {
                             ),
                             Padding(padding: EdgeInsets.only(top:15,left: 60.0, right: 60.0,),
 
-                              child:Container(//width: MediaQuery.of(context).size.width / 2,
+                              child:Container(width: MediaQuery.of(context).size.width / 2,
 
 
 
@@ -298,7 +304,7 @@ class _LinkedState extends State<Linked> {
                                   ),
                                   onPressed: () async {
 
-                                    disconnect c=disconnect(carMake,carMakeModel,context);
+                                    disconnect c=disconnect(DeviceList,SmartPlugList,context);
 
 
                                   },

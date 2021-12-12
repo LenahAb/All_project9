@@ -208,12 +208,12 @@ class _SingUp extends State<SingUp> {
                             print("Password Provided is too Weak");
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                backgroundColor: Colors.orangeAccent,
+                                backgroundColor: Colors.red[400],
                                 duration: Duration(seconds: 10),
                                 content: Text(
                                   "كلمة المرور المقدمة ضعيفة جدًا",
                                   style: TextStyle(
-                                      fontSize: 18.0, color: Colors.black),
+                                      fontSize: 18.0, color: Colors.white),
                                   textAlign: TextAlign.right,
                                 ),),);
 
@@ -222,19 +222,19 @@ class _SingUp extends State<SingUp> {
                             print("Account Already exists");
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                backgroundColor: Colors.orangeAccent,
-                                duration: Duration(seconds: 1000),
+                                backgroundColor: Colors.red[400],
+                                duration: Duration(seconds: 15),
                                 //padding: EdgeInsets.only(right: 30.0),
                                 action: SnackBarAction(
-                                    label: 'حسنًا',
-                                    textColor: Colors.white,
+                                    label: 'X',
+                                    textColor: Colors.black,
                                     onPressed: () {
                                     }),
                                 content:
                                 Text(
                                   "الحساب موجود بالفعل ",
                                   style: TextStyle(
-                                      fontSize: 18.0, color: Colors.black),
+                                      fontSize: 18.0, color: Colors.white),
                                   textAlign: TextAlign.right,
                                 ),),);
 

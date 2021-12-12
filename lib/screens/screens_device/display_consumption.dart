@@ -441,7 +441,7 @@ class _DisplayConsumptionState extends State<DisplayConsumption> {
 
             Container(
               width: double.infinity,
-              height: 80,
+              height: 60,
               decoration: BoxDecoration(
                   color:
                   isOverCons ? Colors.red[400] : Colors.lightGreen[400],

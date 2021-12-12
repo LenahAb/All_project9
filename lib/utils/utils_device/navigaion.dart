@@ -32,7 +32,7 @@ class _NavigationState extends State<Navigation> {
 
   int _selectedIndex = 1;
 
-  late final List<Widget> _widgetOptions = [ListBuildingScreen(user: u),ListDeviceSmartScreen(user: u, BuildingId: widget.BuildingId,),Report(user: u, BuildingId: widget.BuildingId,)];
+  late final List<Widget> _widgetOptions = [Report(user: u, BuildingId: widget.BuildingId,),ListDeviceSmartScreen(user: u, BuildingId: widget.BuildingId,)];
 
   void _onItemTap(int index) {
     setState(() {
@@ -55,9 +55,10 @@ class _NavigationState extends State<Navigation> {
        // backgroundColor: Color(0xFF0390C3),
         //selectedItemColor: Colors.white,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home,), label: 'الصفحة الرئيسية'),
-          BottomNavigationBarItem(icon: Icon(Icons.apps,), label: 'الاجهزة والقابس الذكي'),
+          //BottomNavigationBarItem(icon: Icon(Icons.home,), label: 'الصفحة الرئيسية'),
           BottomNavigationBarItem(icon: Icon(Icons.text_snippet,), label: 'تقرير استهلاك المبنى'),
+          BottomNavigationBarItem(icon: Icon(Icons.apps,), label: 'الاجهزة والقابس الذكي'),
+
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTap,

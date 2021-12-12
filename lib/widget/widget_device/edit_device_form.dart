@@ -33,16 +33,22 @@ class _EditDeviceFormState extends State<EditDeviceForm> {
   bool _isProcessing = false;
 
   late TextEditingController _nameDeviceController;
-
+  var _currentTypeDevice;
 
   @override
   void initState() {
     _nameDeviceController = TextEditingController(
       text: widget.currentNameDevice,
-    );
 
-    super.initState();
+    );
+    //_currentTypeDevice == TextEditingController(
+      // text: widget.currentTypeDevice,);
+
+        super.initState();
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +113,7 @@ class _EditDeviceFormState extends State<EditDeviceForm> {
                       iconEnabledColor:Color(0xFF0390C3),
                       isExpanded: true,
                       isDense: true,
-                      value: typeDevice,
+                      value: _currentTypeDevice,
                       items: snapshot.data?.docs.map((value) {
                         return DropdownMenuItem(
                           value: value.get('type_name'),

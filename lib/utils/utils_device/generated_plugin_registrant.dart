@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:log_in/utils/databaseBuilding.dart';
 var db=FirebaseFirestore.instance.collection("Links").doc();
 var device;
 var smart;
@@ -37,8 +38,8 @@ class connect{
             db.set({
               "link_id":db.id,
               "active":true,
-              "device_id":devid,
-              "smart_plug_id":plug_id,
+              "device_id":firestore.doc('Device/' + devid),
+              "smart_plug_id":firestore.doc('SmartPlug/' + plugid),
               "start_time":DateTime.now(),
 
             });
@@ -54,17 +55,17 @@ class connect{
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         backgroundColor: Colors.lightGreen,
-        duration: Duration(seconds:30),
+        duration: Duration(seconds:3),
         //padding: EdgeInsets.only(right: 30.0),
-        action: SnackBarAction(
+        /*action: SnackBarAction(
             label: 'حسنًا',
             textColor: Colors.white,
             onPressed: () {
-            }),
+            }),*/
         content: Text(
           // 'Your Password has been Changed. Login again !',
           'تم ربط الجهاز بنجاح ',
-          style: TextStyle(fontSize: 18.0),
+          style: TextStyle(fontSize: 18.0,color: Colors.black),
           textAlign: TextAlign.right,
         ),
       ),
@@ -117,17 +118,17 @@ class disconnect{
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         backgroundColor: Colors.red,
-        duration: Duration(seconds:30),
+        duration: Duration(seconds:3),
         //padding: EdgeInsets.only(right: 30.0),
-        action: SnackBarAction(
+       /* action: SnackBarAction(
             label: 'حسنًا',
             textColor: Colors.white,
             onPressed: () {
-            }),
+            }),*/
         content: Text(
           // 'Your Password has been Changed. Login again !',
           'تم إلغاء الربط الجهاز بنجاح ',
-          style: TextStyle(fontSize: 18.0),
+          style: TextStyle(fontSize: 18.0,color: Colors.black),
           textAlign: TextAlign.right,
         ),
       ),

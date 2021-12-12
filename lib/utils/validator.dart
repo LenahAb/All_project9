@@ -7,7 +7,7 @@ class Validator {
     if (name.isEmpty) {
       return 'لا يمكن أن يكون الاسم فارغًا';
     } else if (name.length < 3) {
-  return 'أدخل أسمك بطول 3 أحرف او ارقام على الأقل';
+  return 'أدخل الأسم بطول 3 أحرف او ارقام على الأقل';
   }
 
     return null;

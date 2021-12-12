@@ -44,6 +44,7 @@ class _AddDeviceForm extends State<AddBuildingForm> {
     'خاص',
   ];
   var _selectedFruit;
+  //=  "سكني"
   var setDefaultMake = true, setDefaultMakeModel = true;
 
 
@@ -137,7 +138,7 @@ class _AddDeviceForm extends State<AddBuildingForm> {
 
                   dropdownColor: Colors.white,*/
 
-                  value: _selectedFruit,
+                  value: _selectedFruit ,
                   items: BuildingType.map((item) {
 
                     return DropdownMenuItem(

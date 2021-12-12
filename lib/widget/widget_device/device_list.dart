@@ -122,10 +122,15 @@ class _DeviceList extends State<DeviceList> {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-
+                  subtitle: Text(
+                    "الجاهز مربوط",
+                    style: TextStyle(fontSize: 18, color: Colors.black),
+                    textAlign: TextAlign.right,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               );
-
             },
           );
         }
@@ -198,5 +203,23 @@ class _DeviceList extends State<DeviceList> {
       },
     );
   }
+  /*Future<String> getActive({
+    required String docID
+  }) async {
+   final collection = await FirebaseFirestore.instance.collection('Links');
+    collection.doc().snapshots().listen((docSnapshot) {
+      Map<String, dynamic>? data = docSnapshot.data();
+      if (docSnapshot.exists) {
+        Map<String, dynamic>? data = docSnapshot.data();
+        if (docSnapshot["active"] == true){
 
+        }
+        final String t='ffffff';
+        //return t;
+        // You can then retrieve the value from the Map like this:
+        //var value = data?['your_field'];
+      }
+    });
+  }
+*/
 }

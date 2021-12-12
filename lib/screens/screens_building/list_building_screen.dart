@@ -64,7 +64,7 @@ class _ListBuildingScreen extends State<ListBuildingScreen> {
         appBar: AppBar(
           elevation: 0,
             automaticallyImplyLeading: false,
-            leading: Builder(
+           /* leading: Builder(
               builder: (BuildContext context) {
                 return IconButton(
                   icon: const Icon(Icons.arrow_back, color: Color(0xFF535353)),
@@ -79,7 +79,7 @@ class _ListBuildingScreen extends State<ListBuildingScreen> {
                 );
               },
 
-          ),
+          ),*/
           backgroundColor: Color(0xFFF5F8FA),
             actions: <Widget>[
           Padding(
