@@ -46,17 +46,17 @@ class _AddSmartForm extends State<AddSmartForm> {
         child:SingleChildScrollView(
       child: Column(
         children: [
-          Column(
+         /* Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
 
                 Padding(padding: EdgeInsets.only(left: 170.0,top: 60.0),
                   child: Text(' إضافة قابس ذكي',style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF0390C3), letterSpacing: 2,),),
                 ),
-              ]),
+              ]),*/
 
           Padding(
-            padding: const EdgeInsets.only(left: 8.0,right: 8.0, bottom: 24.0,),
+            padding: const EdgeInsets.only(left: 8.0,right: 8.0, bottom: 24.0,top: 100),
 
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -64,7 +64,7 @@ class _AddSmartForm extends State<AddSmartForm> {
                 SizedBox(height: 24.0),
                 Text(
                   ': أسم القابس الذكي  ',
-                  style: TextStyle(color: Colors.black, fontSize: 19.0, letterSpacing: 1,),
+                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 19.0, letterSpacing: 1,),
                 ),
                 SizedBox(height: 8.0),
                 CustomFormField(
@@ -131,7 +131,16 @@ class _AddSmartForm extends State<AddSmartForm> {
                         builder: (context) => Navigation(BuildingId: widget.BuildingId, user:u,)
                     ),
                     );
-
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: Colors.lightGreen,
+                        content: Text(
+                          "تم إضافة القابس الذكي بنجاح",
+                          style: TextStyle(fontSize: 15.0),
+                          textAlign: TextAlign.right,
+                        ),
+                      ),
+                    );
                   }
                 },
                 child: Padding(

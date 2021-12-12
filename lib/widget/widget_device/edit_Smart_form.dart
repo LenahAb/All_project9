@@ -52,7 +52,7 @@ class _EditSmartFormState extends State<EditSmartForm> {
               children: [
                 SizedBox(height: 24.0),
                 Text(': أسم القابس الذكي',
-                  style: TextStyle(color: Colors.black, fontSize: 19.0, letterSpacing: 1,),),
+                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold,fontSize: 19.0, letterSpacing: 1,),),
                 SizedBox(height: 8.0),
 
                 CustomFormField(
@@ -115,6 +115,16 @@ class _EditSmartFormState extends State<EditSmartForm> {
                     });
 
                     Navigator.of(context).pop();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: Colors.lightGreen,
+                        content: Text(
+                          "تم تعديل معلومات القابس الذكي بنجاح",
+                          style: TextStyle(fontSize: 15.0),
+                          textAlign: TextAlign.right,
+                        ),
+                      ),
+                    );
                   }
                 },
                 child: Padding(

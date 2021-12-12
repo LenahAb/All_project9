@@ -95,8 +95,7 @@ class _ListBuildingScreen extends State<ListBuildingScreen> {
         ),
 
           bottomNavigationBar:SingleChildScrollView(
-    child:Column(children: [
-    Padding(padding: const EdgeInsets.only(right: 300.0,bottom: 20.0,),
+   child: Padding(padding: const EdgeInsets.only(right: 300.0,bottom: 20.0,),
     child:FloatingActionButton(
           backgroundColor:Color(0xFF0390C3),
           onPressed: () {
@@ -110,21 +109,7 @@ class _ListBuildingScreen extends State<ListBuildingScreen> {
             color: Colors.white,),
         ),
            ),
-     /* BottomNavigationBar(
-        backgroundColor: Color(0xFF7F7F7F),
-        selectedItemColor: Color(0xFFFFC800),
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home,), label: 'الصفحة الرئيسية'),
-          BottomNavigationBarItem(icon: Icon(Icons.apps,), label: 'الاجهزة والقابس الذكي'),
-          BottomNavigationBarItem(icon: Icon(Icons.text_snippet,), label: 'تقرير استهلاك المبنى'),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTap,
-      ),*/
-
-
-    ]),
-          ),
+    ),
 
 
 

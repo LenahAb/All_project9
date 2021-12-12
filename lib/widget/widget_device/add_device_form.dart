@@ -46,17 +46,17 @@ class _AddDeviceForm extends State<AddDeviceForm> {
      child:SingleChildScrollView(
       child: Column(
         children: [
-        Column(
+       /* Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
 
           Padding(padding: EdgeInsets.only(left: 230.0,top: 60.0),
             child: Text(' إضافة جهاز',style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF0390C3), letterSpacing: 2,),),
           ),
-          ]),
+          ]),*/
 
           Padding(
-            padding: const EdgeInsets.only(left: 8.0,right: 8.0, bottom: 24.0,),
+            padding: const EdgeInsets.only(left: 8.0,right: 8.0, bottom: 24.0,top: 100),
 
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -64,7 +64,7 @@ class _AddDeviceForm extends State<AddDeviceForm> {
                 SizedBox(height: 24.0),
                 Text(
                   ': أسم الجهاز',
-                  style: TextStyle(color: Colors.black, fontSize: 19.0, letterSpacing: 1,),
+                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 19.0, letterSpacing: 1,),
                 ),
                 SizedBox(height: 8.0),
                 CustomFormField(
@@ -86,7 +86,7 @@ class _AddDeviceForm extends State<AddDeviceForm> {
                 SizedBox(height: 24.0),
                 Text(
                   ': نوع الجهاز',
-                  style: TextStyle(color: Colors.black, fontSize: 19.0, letterSpacing: 1,
+                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 19.0, letterSpacing: 1,
                   ),
                 ),
 
@@ -111,7 +111,7 @@ class _AddDeviceForm extends State<AddDeviceForm> {
                         // First item from the List will be displayed
                         if (setDefaultMake) {
                           typeDevice = snapshot.data?.docs[0].get('type_name');
-                          debugPrint('setDefault typeDevice: $typeDevice');
+                         // debugPrint('setDefault typeDevice: $typeDevice');
 
                         }
                         return DropdownButton(
@@ -208,7 +208,16 @@ class _AddDeviceForm extends State<AddDeviceForm> {
                   ),
 
                   );
-
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      backgroundColor: Colors.lightGreen,
+                      content: Text(
+                        "تم إضافة الجهاز بنجاح",
+                        style: TextStyle(fontSize: 15.0),
+                        textAlign: TextAlign.right,
+                      ),
+                    ),
+                  );
 
                 }
 

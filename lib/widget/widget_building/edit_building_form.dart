@@ -32,7 +32,10 @@ class _EditBuildingFormState extends State<EditBuildingForm> {
     'سكني',
     'تجاري',
     'صناعي',
-
+    'حكومي',
+    'زراعي',
+    'خيري',
+    'خاص',
   ];
   var _selectedFruit;
 
@@ -58,21 +61,21 @@ class _EditBuildingFormState extends State<EditBuildingForm> {
       child:SingleChildScrollView(
       child: Column(
         children: [
-          Column(
+        /* Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
 
                 Padding(padding: EdgeInsets.only(left: 140.0,top: 60.0),
                   child: Text(' تعديل معلومات المبنى',style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF0390C3), letterSpacing: 2,),),
                 ),
-              ]),
-          Padding( padding: const EdgeInsets.only(left: 8.0,right: 8.0, bottom: 24.0,),
+              ]),*/
+          Padding( padding: const EdgeInsets.only(left: 8.0,right: 8.0, bottom: 24.0,top: 100),
 
             child: Column(crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 SizedBox(height: 24.0),
                 Text(': أسم المبنى',
-                  style: TextStyle(color: Colors.black, fontSize: 19.0, letterSpacing: 1,),),
+                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 19.0, letterSpacing: 1,),),
                 SizedBox(height: 8.0),
 
                 CustomFormField(
@@ -95,18 +98,26 @@ class _EditBuildingFormState extends State<EditBuildingForm> {
                 SizedBox(height: 24.0),
                 Text(
                   ': نوع المبنى',
-                  style: TextStyle(color: Colors.black, fontSize: 19.0, letterSpacing: 1,),
+                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 19.0, letterSpacing: 1,),
                 ),
-                SizedBox(height: 8.0),
 
-            Padding(padding: EdgeInsets.only(right: 20,left: 15),
+
+
+
+                SizedBox(height: 8.0),
+            Container(padding:  EdgeInsets.symmetric(horizontal: 10, vertical:15),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black38, width:1),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10)),
               child: DropdownButton(
                   dropdownColor: Colors.white,
                   style: TextStyle(color: Colors.black),
                   iconEnabledColor:Color(0xFF0390C3),
                   isExpanded: true,
                   isDense: true,
-
+                  iconSize: 34,
+                  underline: Container(),
                   /*
                   icon: Icon(Icons.arrow_drop_down,color: Colors.grey,),
 
@@ -176,6 +187,16 @@ class _EditBuildingFormState extends State<EditBuildingForm> {
                     });
 
                     Navigator.of(context).pop();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: Colors.lightGreen,
+                        content: Text(
+                          "تم تعديل معلومات المبنى بنجاح",
+                          style: TextStyle(fontSize: 15.0),
+                          textAlign: TextAlign.right,
+                        ),
+                      ),
+                    );
                   }
                 },
                 child: Padding(

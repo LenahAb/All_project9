@@ -63,7 +63,7 @@ class _EditDeviceFormState extends State<EditDeviceForm> {
             children: [
                SizedBox(height: 24.0),
                   Text(': أسم الجهاز',
-                     style: TextStyle(color: Colors.black, fontSize: 19.0, letterSpacing: 1,),),
+                     style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold,fontSize: 19.0, letterSpacing: 1,),),
                   SizedBox(height: 8.0),
 
                 CustomFormField(
@@ -86,11 +86,15 @@ class _EditDeviceFormState extends State<EditDeviceForm> {
                 SizedBox(height: 24.0),
                  Text(
                 ': نوع الجهاز',
-                style: TextStyle(color: Colors.black, fontSize: 19.0, letterSpacing: 1,),
+                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold,fontSize: 19.0, letterSpacing: 1,),
                 ),
 
               SizedBox(height: 8.0),
-              Padding(padding: EdgeInsets.only(right: 20,left: 15),
+              Container(padding:  EdgeInsets.symmetric(horizontal: 10, vertical:15),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black38, width:1),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10)),
                 child: Center(
                 child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
@@ -113,6 +117,8 @@ class _EditDeviceFormState extends State<EditDeviceForm> {
                       iconEnabledColor:Color(0xFF0390C3),
                       isExpanded: true,
                       isDense: true,
+                      iconSize: 34,
+                      underline: Container(),
                       value: _currentTypeDevice,
                       items: snapshot.data?.docs.map((value) {
                         return DropdownMenuItem(
@@ -197,6 +203,17 @@ class _EditDeviceFormState extends State<EditDeviceForm> {
                   });
 
                   Navigator.of(context).pop();
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      backgroundColor: Colors.lightGreen,
+                      content: Text(
+                        "تم تعديل معلومات الجهاز بنجاح",
+                        style: TextStyle(fontSize: 15.0),
+                        textAlign: TextAlign.right,
+                      ),
+                    ),
+                  );
                 }
                      };});});
               },

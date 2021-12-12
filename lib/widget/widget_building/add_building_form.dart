@@ -46,6 +46,7 @@ class _AddDeviceForm extends State<AddBuildingForm> {
   var _selectedFruit;
   //=  "سكني"
   var setDefaultMake = true, setDefaultMakeModel = true;
+  var c;
 
 
 
@@ -60,7 +61,7 @@ class _AddDeviceForm extends State<AddBuildingForm> {
       child:SingleChildScrollView(
       child: Column(
         children: [
-          Column(
+          /*Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
 
@@ -68,16 +69,16 @@ class _AddDeviceForm extends State<AddBuildingForm> {
                Padding(padding: EdgeInsets.only(left: 230.0,top: 60.0),
                   child: Text(' إضافة مبنى',style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF0390C3), letterSpacing: 2,),),
                 ),
-              ]),
+              ]),*/
       Padding(
-            padding: const EdgeInsets.only(left: 8.0,right: 8.0, bottom: 24.0,),
+            padding: const EdgeInsets.only(left: 8.0,right: 8.0, bottom: 24.0,top: 100),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 SizedBox(height: 24.0),
                 Text(
                   ': أسم المبنى',
-                  style: TextStyle(color: Colors.black, fontSize: 19.0, letterSpacing: 1,),
+                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 19.0, letterSpacing: 1,),
                 ),
                 SizedBox(height: 8.0),
                 CustomFormField(
@@ -99,7 +100,7 @@ class _AddDeviceForm extends State<AddBuildingForm> {
                 SizedBox(height: 24.0),
                 Text(
                   ': نوع المبنى',
-                  style: TextStyle(color: Colors.black, fontSize: 19.0, letterSpacing: 1,
+                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 19.0, letterSpacing: 1,
                   ),
                 ),
 
@@ -196,12 +197,38 @@ class _AddDeviceForm extends State<AddBuildingForm> {
 
                   if (_addDeviceFormKey.currentState!.validate()) {
                     setState(() { _isProcessing = true;});
+                    print(
+                      'hgggggggggggggggggggggggggg'
+                    );
 
+                  c =FirebaseFirestore.instance.collection("Building").where("building_owner_id", isEqualTo: 'BuildingOwner/'+_IdUser.uid);
+                     c.get().then((QuerySnapshot snapshot) {
+                     snapshot.docs.forEach((DocumentSnapshot doc) {
+                      if (doc["building_name"] == _nameDeviceController.text ){
+                        print(
+                            'h33333333333333'
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: Colors.orangeAccent,
+                        content: Text(
+                          'اسم المبنى مكرر! ',
+                          style: TextStyle(fontSize: 18.0),
+                          textAlign: TextAlign.right,
+                        ),
+                      ),
+                    );
+                      }
+                     });});
+                    print(
+                        'h2222222222222222222222222'
+                    );
 
                       await DatabaseBuilding.addBuilding(
                         nameBuilding: _nameDeviceController.text,
                         typeBuilding: _selectedFruit,
                         buildingOwnerId: _IdUser.uid,);
+
 
 
                  setState(() {
@@ -213,6 +240,17 @@ class _AddDeviceForm extends State<AddBuildingForm> {
                               ListBuildingScreen(user: _IdUser)
                       ),
                       );
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: Colors.lightGreen,
+                        content: Text(
+                          "تم إضافة المبنى بنجاح",
+                          style: TextStyle(fontSize: 15.0),
+                          textAlign: TextAlign.right,
+                        ),
+                      ),
+                    );
                     }
                     /*ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
