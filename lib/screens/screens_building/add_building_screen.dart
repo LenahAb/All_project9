@@ -50,8 +50,8 @@ class _AddBuildingScreenState extends State<AddBuildingScreen> {
                 bottom: 20.0,
               ),
               child: AddBuildingForm(
-                nameDeviceFocusNode: _nameDevice,
-                typeDeviceFocusNode: _typeDevice,
+                nameBuildingFocusNode: _nameDevice,
+                typeBuildingFocusNode: _typeDevice,
                 user: widget.user,
               ),
             ),

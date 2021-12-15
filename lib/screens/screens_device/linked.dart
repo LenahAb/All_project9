@@ -59,7 +59,7 @@ class _LinkedState extends State<Linked> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: const [
 
-                            Padding(padding: EdgeInsets.only(left: 140 , top: 50.0),
+                            Padding(padding: EdgeInsets.only(left: 140 , top: 60.0),
                              // child: Text('ربط جهاز بقابس ذكي ', style: TextStyle(fontSize: 24,
                                // fontWeight: FontWeight.bold,
                                // color: Color(0xFF0390C3),
@@ -74,8 +74,8 @@ class _LinkedState extends State<Linked> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: const [
 
-                            Padding(padding: EdgeInsets.only(left: 257.0, top: 20.0),
-                              child: Text(' اختر جهاز ', style: TextStyle(fontSize: 20,
+                            Padding(padding: EdgeInsets.only(left: 200.0, top:0.0),
+                              child: Text(' اختر جهاز ', style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,
                                 color: Colors.black,
                                 letterSpacing: 2,),),
                             ),
@@ -152,8 +152,8 @@ class _LinkedState extends State<Linked> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
 
-                                  Padding(padding: EdgeInsets.only(left: 230.0, top: 40.0,right: 30),
-                                    child: Text(' اختر قابس ذكي ', style: TextStyle(fontSize: 20,
+                                  Padding(padding: EdgeInsets.only(left: 200.0, top: 30.0,right: 30),
+                                    child: Text(' اختر قابس ذكي ', style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,
                                       color: Colors.black,
                                       letterSpacing: 2,),),
                                   ),
@@ -228,7 +228,7 @@ class _LinkedState extends State<Linked> {
                          ),
                          ),
                     ),
-                            Column(
+                           /* Column(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: const [
 
@@ -239,12 +239,11 @@ class _LinkedState extends State<Linked> {
                                       color: Colors.black,
                                       letterSpacing: 2,), textAlign: TextAlign.right,),
                                   ),
-                                ]),
-
+                                ]),*/
 
 
                             Center(
-                              child:Padding(padding: EdgeInsets.only(top: 50,left: 60.0, right: 60.0,),
+                              child:Padding(padding: EdgeInsets.only(top: 70,left: 60.0, right: 60.0,),
 
                                 child:Container(width: MediaQuery.of(context).size.width / 2,
 

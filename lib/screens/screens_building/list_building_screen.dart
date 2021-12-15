@@ -20,20 +20,20 @@ class ListBuildingScreen extends StatefulWidget {
 }
 
 class _ListBuildingScreen extends State<ListBuildingScreen> {
-   late User u;
+   late User _IdUser;
 
   @override
   void initState() {
-    u = widget.user ;
+    _IdUser = widget.user ;
     super.initState();
-    getBuildingData();
+    //getBuildingData();
   }
-
+/*
    bool loading = true;
    bool empty=false;
 
    void getBuildingData() async {
-     await FirebaseFirestore.instance.collection('Building').doc('BuildingOwner/'+ u.uid).get().then((value) {
+     await FirebaseFirestore.instance.collection('Building').doc('BuildingOwner/'+ _IdUser.uid).get().then((value) {
        if (value.exists) {
 
 
@@ -46,7 +46,7 @@ class _ListBuildingScreen extends State<ListBuildingScreen> {
      });
      }
      });
-   }
+   }*/
 
 
 
@@ -64,6 +64,9 @@ class _ListBuildingScreen extends State<ListBuildingScreen> {
         appBar: AppBar(
           elevation: 0,
             automaticallyImplyLeading: false,
+          centerTitle: true,
+          title: Text('المباني',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF0390C3), letterSpacing: 2,
+          ),),
            /* leading: Builder(
               builder: (BuildContext context) {
                 return IconButton(
@@ -86,7 +89,7 @@ class _ListBuildingScreen extends State<ListBuildingScreen> {
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => (ProfilePage(user: u,))));},
+                    MaterialPageRoute(builder: (context) => (ProfilePage(user: _IdUser,))));},
                 child: Icon(Icons.person,color: Color(0xFF535353),size: 35,),
 
               )
@@ -101,7 +104,7 @@ class _ListBuildingScreen extends State<ListBuildingScreen> {
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => AddBuildingScreen(user: u),
+                builder: (context) => AddBuildingScreen(user: _IdUser),
               ),
             ); },
           child: Icon(
@@ -128,7 +131,7 @@ class _ListBuildingScreen extends State<ListBuildingScreen> {
               right: 40.0,
               bottom: 30.0,
             ),
-            child: BuildingList(user :u),
+            child: BuildingList(user :_IdUser),
           ),
         ),
 

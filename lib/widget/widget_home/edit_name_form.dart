@@ -53,7 +53,7 @@ class _EditNameFormState extends State<EditNameForm> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
 
-                      Padding(padding: EdgeInsets.only(left: 195.0, top: 150.0),
+                      Padding(padding: EdgeInsets.only(left: 150.0, top: 150.0),
                         child: Text(': تعديل الأسم', style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -134,18 +134,19 @@ class _EditNameFormState extends State<EditNameForm> {
                                   builder: (context) => ProfilePage (user: user),
                                 ),
                               );
-                            }
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                backgroundColor: Colors.lightGreen,
-                                duration: Duration(seconds: 30),
-                                content: Text(
-                                  'تم تحديث الاسم بنجاح',
-                                  style: TextStyle(fontSize: 18.0),
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor: Colors.lightGreen,
+                                  duration: Duration(seconds: 4),
+                                  content: Text(
+                                    'تم تحديث الاسم بنجاح',
+                                    style: TextStyle(fontSize: 18.0),
                                     textAlign: TextAlign.right,
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+                            }
+
                         } catch (e) {}
 
                             setState(() {

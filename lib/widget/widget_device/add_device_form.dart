@@ -23,16 +23,17 @@ class AddDeviceForm extends StatefulWidget {
 
 class _AddDeviceForm extends State<AddDeviceForm> {
   final _addDeviceFormKey = GlobalKey<FormState>();
+
   var typeDevice ;
   var setDefaultMake = true, setDefaultMakeModel = true;
 
   bool _isProcessing = false;
 
-  late User u;
+  late User _IdUser;
 
   @override
   void initState() {
-    u = widget.user ;
+    _IdUser = widget.user ;
     super.initState();
   }
 
@@ -203,7 +204,7 @@ class _AddDeviceForm extends State<AddDeviceForm> {
                   });
 
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Navigation(BuildingId:widget.BuildingId, user: u,
+                    builder: (context) => Navigation(BuildingId:widget.BuildingId, user: _IdUser,
                        )
                   ),
 

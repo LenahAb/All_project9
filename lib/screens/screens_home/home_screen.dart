@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
 
          body:Column(
            children: [
-             Center(child: Padding(padding: EdgeInsets.only(left: 40.0, right: 40.0, top: 500.0,bottom: 0.0,),
+             Center(child: Padding(padding: EdgeInsets.only(left: 40.0, right: 40.0, top: 450.0,bottom: 0.0,),
 
                child: Container(width: double.maxFinite,
 

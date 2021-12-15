@@ -20,11 +20,11 @@ class IconAdd extends StatefulWidget {
 
 class _IconAdd extends State<IconAdd> {
 
-  late User u;
+  late User _IdUser;
 
   @override
   void initState() {
-    u = widget.user ;
+    _IdUser = widget.user ;
     super.initState();
   }
 
@@ -46,7 +46,7 @@ class _IconAdd extends State<IconAdd> {
               onPressed: () async {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (context) => Navigation(user: u, BuildingId: widget.BuildingId),
+                    builder: (context) => Navigation(user: _IdUser, BuildingId: widget.BuildingId),
                   ),
                 );
               }
@@ -78,7 +78,7 @@ class _IconAdd extends State<IconAdd> {
             ),
             onPressed: () async {
               Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => AddDeviceScreen(BuildingId: widget.BuildingId, user: u,
+                    builder: (context) => AddDeviceScreen(BuildingId: widget.BuildingId, user: _IdUser,
                        )
                 ),
                 );
@@ -121,7 +121,7 @@ class _IconAdd extends State<IconAdd> {
             ),
             onPressed: () async {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => AddSmartScreen(BuildingId: widget.BuildingId, user: u,)
+                  builder: (context) => AddSmartScreen(BuildingId: widget.BuildingId, user: _IdUser,)
               ),
               );
 

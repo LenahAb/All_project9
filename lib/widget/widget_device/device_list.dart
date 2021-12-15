@@ -25,6 +25,7 @@ class _DeviceList extends State<DeviceList> {
         if (snapshot.hasError) {
           return Text('Something went wrong');
         } else if (snapshot.hasData || snapshot.data != null) {
+          if(snapshot.data!.docs.isNotEmpty){
           return ListView.separated(
             separatorBuilder: (context, index) => SizedBox(height: 16.0),
             itemCount: snapshot.data!.docs.length,
@@ -122,17 +123,23 @@ class _DeviceList extends State<DeviceList> {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  subtitle: Text(
+                /*  subtitle: Text(
                     "الجاهز مربوط",
                     style: TextStyle(fontSize: 18, color: Colors.black),
                     textAlign: TextAlign.right,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                  ),
+                  ),*/
                 ),
               );
             },
           );
+          }else {
+            return Center(child:Text('لا توجد أجهزة',  style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+            ),));
+          }
         }
 
         return Center(

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:log_in/screens/screens_device/list_device_smart_screen.dart';
@@ -25,19 +26,20 @@ class AddSmartForm extends StatefulWidget {
 
 class _AddSmartForm extends State<AddSmartForm> {
   final _addSmartFormKey = GlobalKey<FormState>();
-
+  final FocusNode plugKeyFocusNode = FocusNode();
   bool _isProcessing = false;
 
-  late User u;
+  late User _IdUser;
 
   @override
   void initState() {
-    u = widget.user ;
+    _IdUser = widget.user ;
     super.initState();
   }
 
 
   final TextEditingController _plugNameController = TextEditingController();
+  final TextEditingController _plugKeyController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +82,27 @@ class _AddSmartForm extends State<AddSmartForm> {
                   label: 'أسم القابس الذكي',
                   hint: 'أدخل أسم القابس الذكي',
                 ),
-
+                SizedBox(height: 24.0),
+                Text(
+                  ': رمز القابس الذكي  ',
+                  style: TextStyle(
+                    color: Colors.black,fontWeight: FontWeight.bold,fontSize: 19.0,letterSpacing: 1,
+                  ),
+                ),
+                SizedBox(height: 8.0),
+                CustomFormField(
+                  isLabelEnabled: false,
+                  controller: _plugKeyController,
+                  focusNode: plugKeyFocusNode,
+                  keyboardType: TextInputType.text,
+                  inputAction: TextInputAction.next,
+                  obscureText: false,
+                  validator: (value) => Validator.validateField(
+                    value: value,
+                  ),
+                  label: 'رمز القابس الذكي',
+                  hint: 'أدخل رمز القابس الذكي',
+                ),
 
 
               ],
@@ -118,8 +140,22 @@ class _AddSmartForm extends State<AddSmartForm> {
                   if (_addSmartFormKey.currentState!.validate()) {
                     setState(() { _isProcessing = true;});
 
+                    await FirebaseFirestore.instance.collection('SmartPlug').doc(_plugKeyController.text).get().then((value) async {
+                      if (value.exists) {
+                         setState(() {
+                         _isProcessing = false;});
+                      ScaffoldMessenger.of(context).showSnackBar(
+                         SnackBar(
+                         backgroundColor: Colors.red,
+                           duration: Duration(seconds: 2),
+                           content: Text(
+                             'القابس موجود بالفعل', style: TextStyle(fontSize: 18.0,color:Colors.white), textAlign: TextAlign.right,),),);
+
+
+                      } else {
                     await DatabaseSmartPlug.addSmart(
                       nameSmart_plug: _plugNameController.text,
+                      keySmart_plug: _plugKeyController.text,
                       buildingId: widget.BuildingId,
                     );
 
@@ -128,7 +164,7 @@ class _AddSmartForm extends State<AddSmartForm> {
                     });
 
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => Navigation(BuildingId: widget.BuildingId, user:u,)
+                        builder: (context) => Navigation(BuildingId: widget.BuildingId, user:_IdUser,)
                     ),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -141,6 +177,10 @@ class _AddSmartForm extends State<AddSmartForm> {
                         ),
                       ),
                     );
+
+                   }
+                  });
+
                   }
                 },
                 child: Padding(

@@ -74,7 +74,7 @@ class _LogIn extends State<LogIn> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       SizedBox(height: 25.0),
-                      Padding(padding: EdgeInsets.only(left: 150.0,top: 60.0),
+                      Padding(padding: EdgeInsets.only(left: 150.0,top: 40.0),
                         child: Text(' تسجيل الدخول',style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF0390C3), letterSpacing: 2,),),
                       ),
                       Padding(padding: EdgeInsets.only(left:140.0, ),
@@ -143,7 +143,7 @@ class _LogIn extends State<LogIn> {
 
 
 
-                  Padding(padding: EdgeInsets.only(left: 200.0,bottom: 40.0 ),
+                  Padding(padding: EdgeInsets.only(left: 150.0,bottom: 40.0 ),
 
                     child: TextButton(
                       child: Text('نسيت كلمة المرور ؟',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.grey[700], letterSpacing: 2,),),

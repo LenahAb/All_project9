@@ -21,11 +21,11 @@ class _AddDeviceScreen extends State<AddDeviceScreen> {
   final FocusNode _nameDevice = FocusNode();
   final FocusNode _typeDevice = FocusNode();
 
-  late User u;
+  late User _IdUser;
 
   @override
   void initState() {
-    u = widget.user ;
+    _IdUser = widget.user ;
     super.initState();
   }
 
@@ -65,7 +65,7 @@ class _AddDeviceScreen extends State<AddDeviceScreen> {
             child: AddDeviceForm(
               nameDeviceFocusNode: _nameDevice,
               BuildingId: widget.BuildingId,
-              user: u,
+              user: _IdUser,
             ),
           ),
         ),

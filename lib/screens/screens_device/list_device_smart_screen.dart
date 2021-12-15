@@ -23,7 +23,7 @@ class ListDeviceSmartScreen extends StatefulWidget {
 }
 
 class _ListDeviceSmartScreen extends State<ListDeviceSmartScreen> with SingleTickerProviderStateMixin {
-  late User u;
+  late User _IdUser;
 
  
 
@@ -41,7 +41,7 @@ class _ListDeviceSmartScreen extends State<ListDeviceSmartScreen> with SingleTic
     super.initState();
     _tabController = TabController(length: _pages.length, vsync: this);
     _tabController.addListener(() => setState(() {}));
-    u = widget.user ;
+    _IdUser = widget.user ;
     super.initState();
   }
 
@@ -77,7 +77,7 @@ class _ListDeviceSmartScreen extends State<ListDeviceSmartScreen> with SingleTic
                   onPressed: () async {
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => ListBuildingScreen(user: u,),
+                        builder: (context) => ListBuildingScreen(user: _IdUser,),
                       ),
                     );
                   }
@@ -103,7 +103,7 @@ class _ListDeviceSmartScreen extends State<ListDeviceSmartScreen> with SingleTic
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => IconAdd(BuildingId: widget.BuildingId, user: u,
+                builder: (context) => IconAdd(BuildingId: widget.BuildingId, user: _IdUser,
                   ),
               ),
             ); },

@@ -9,13 +9,13 @@ import 'package:log_in/utils/validator.dart';
 import '../../utils/custom_form_field.dart';
 
 class AddBuildingForm extends StatefulWidget {
-  final FocusNode nameDeviceFocusNode;
-  final FocusNode typeDeviceFocusNode;
+  final FocusNode nameBuildingFocusNode;
+  final FocusNode typeBuildingFocusNode;
   final User user;
 
   const AddBuildingForm({
-    required this.nameDeviceFocusNode,
-    required this.typeDeviceFocusNode,
+    required this.nameBuildingFocusNode,
+    required this.typeBuildingFocusNode,
     required this.user,
   });
 
@@ -24,7 +24,7 @@ class AddBuildingForm extends StatefulWidget {
 }
 
 class _AddDeviceForm extends State<AddBuildingForm> {
-  final _addDeviceFormKey = GlobalKey<FormState>();
+  final _addBuildingFormKey = GlobalKey<FormState>();
   late User _IdUser;
 
   @override
@@ -43,21 +43,19 @@ class _AddDeviceForm extends State<AddBuildingForm> {
     'خيري',
     'خاص',
   ];
-  var _selectedFruit;
-  //=  "سكني"
+  var _selectedFruit=  "سكني";
   var setDefaultMake = true, setDefaultMakeModel = true;
   var c;
 
 
 
 
-  final TextEditingController _nameDeviceController = TextEditingController();
-  final TextEditingController _typeDeviceController = TextEditingController();
+  final TextEditingController _nameBuildingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _addDeviceFormKey,
+      key: _addBuildingFormKey,
       child:SingleChildScrollView(
       child: Column(
         children: [
@@ -83,8 +81,8 @@ class _AddDeviceForm extends State<AddBuildingForm> {
                 SizedBox(height: 8.0),
                 CustomFormField(
                   isLabelEnabled: false,
-                  controller: _nameDeviceController,
-                  focusNode: widget.nameDeviceFocusNode,
+                  controller: _nameBuildingController,
+                  focusNode: widget.nameBuildingFocusNode,
                   obscureText:false,
                   keyboardType: TextInputType.text,
                   inputAction: TextInputAction.next,
@@ -140,11 +138,10 @@ class _AddDeviceForm extends State<AddBuildingForm> {
                   dropdownColor: Colors.white,*/
 
                   value: _selectedFruit ,
-                  items: BuildingType.map((item) {
+                items: BuildingType.map((item) {
 
                     return DropdownMenuItem(
                         value: item,
-
                         child: Container(
                           alignment: Alignment.centerRight,
                           child:  Text(item,style: TextStyle(fontSize: 16),),
@@ -153,7 +150,7 @@ class _AddDeviceForm extends State<AddBuildingForm> {
                   }).toList(),
                   onChanged: (selectedItem) => setState(() {
 
-                    _selectedFruit = selectedItem;
+                    _selectedFruit = selectedItem.toString();
 
 
 
@@ -163,6 +160,9 @@ class _AddDeviceForm extends State<AddBuildingForm> {
 
         ),
         ),
+
+
+
               ],
           ),
             ),
@@ -192,19 +192,19 @@ class _AddDeviceForm extends State<AddBuildingForm> {
                   ),
                 ),
                 onPressed: () async {
-                  widget.nameDeviceFocusNode.unfocus();
-                  widget.typeDeviceFocusNode.unfocus();
+                  widget.nameBuildingFocusNode.unfocus();
+                  widget.typeBuildingFocusNode.unfocus();
 
-                  if (_addDeviceFormKey.currentState!.validate()) {
+                  if (_addBuildingFormKey.currentState!.validate()) {
                     setState(() { _isProcessing = true;});
                     print(
                       'hgggggggggggggggggggggggggg'
                     );
 
-                  c =FirebaseFirestore.instance.collection("Building").where("building_owner_id", isEqualTo: 'BuildingOwner/'+_IdUser.uid);
+                  /*c =  FirebaseFirestore.instance.collection("Building").where("building_owner_id", isEqualTo:'BuildingOwner/'+_IdUser.uid).snapshots();
                      c.get().then((QuerySnapshot snapshot) {
                      snapshot.docs.forEach((DocumentSnapshot doc) {
-                      if (doc["building_name"] == _nameDeviceController.text ){
+                      if (doc["building_name"] == _nameBuildingController.text ){
                         print(
                             'h33333333333333'
                         );
@@ -222,10 +222,10 @@ class _AddDeviceForm extends State<AddBuildingForm> {
                      });});
                     print(
                         'h2222222222222222222222222'
-                    );
+                    );*/
 
                       await DatabaseBuilding.addBuilding(
-                        nameBuilding: _nameDeviceController.text,
+                        nameBuilding: _nameBuildingController.text,
                         typeBuilding: _selectedFruit,
                         buildingOwnerId: _IdUser.uid,);
 
@@ -292,7 +292,7 @@ class _AddDeviceForm extends State<AddBuildingForm> {
  Future<bool> AddName () async {
 
    FirebaseFirestore.instance.collection("Building")
-       .where('building_name', isNotEqualTo:_nameDeviceController.text);
+       .where('building_name', isNotEqualTo:_nameBuildingController.text);
    return true;
  }
 }

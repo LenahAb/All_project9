@@ -33,7 +33,7 @@ class _EditDeviceFormState extends State<EditDeviceForm> {
   bool _isProcessing = false;
 
   late TextEditingController _nameDeviceController;
-  var _currentTypeDevice;
+  var _currentTypeDevice ;
 
   @override
   void initState() {
@@ -96,56 +96,56 @@ class _EditDeviceFormState extends State<EditDeviceForm> {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10)),
                 child: Center(
-                child: StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance
-                      .collection('Type')
-                      .snapshots(),
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('Type')
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      // Safety check to ensure that snapshot contains data
+                      // without this safety check, StreamBuilder dirty state warnings will be thrown
+                      if (!snapshot.hasData) return Container();
+                      // Set this value for default,
+                      // setDefault will change if an item was selected
+                      // First item from the List will be displayed
+                     /* if (setDefaultMake) {
+                        typeDevice = snapshot.data?.docs[0].get('type_name');
 
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                    // Safety check to ensure that snapshot contains data
-                    // without this safety check, StreamBuilder dirty state warnings will be thrown
-                    if (!snapshot.hasData) return Container();
-                    // Set this value for default,
-                    // setDefault will change if an item was selected
-                    // First item from the List will be displayed
+                      }*/
+                      return DropdownButton(
+                        dropdownColor: Colors.white,
+                        style: TextStyle(color: Colors.black),
+                        iconEnabledColor:Color(0xFF0390C3),
+                        isExpanded: true,
+                        isDense: true,
+                        iconSize: 34,
+                        underline: Container(),
+                        value: typeDevice,
+                        items: snapshot.data?.docs.map((value) {
+                          return DropdownMenuItem(
+                            value: value.get('type_name'),
+                            child: Container(
+                              alignment: Alignment.centerRight,
+                              child: Text('${value.get('type_name')}',style: TextStyle(fontSize: 16),),
+                            ),);
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(
+                                () {
+                              typeDevice = value;
+                              // Default dropdown value won't be displayed anymore
+                              setDefaultMake = false;
+                              // Set makeModel to true to display first car from list
+                              setDefaultMakeModel = true;
+                            },
+                          );
+                        },
+                        //hint:Text("                                                                                     "),
 
-
-                    return DropdownButton(
-                      dropdownColor: Colors.white,
-                      style: TextStyle(color: Colors.black),
-                      iconEnabledColor:Color(0xFF0390C3),
-                      isExpanded: true,
-                      isDense: true,
-                      iconSize: 34,
-                      underline: Container(),
-                      value: _currentTypeDevice,
-                      items: snapshot.data?.docs.map((value) {
-                        return DropdownMenuItem(
-                          value: value.get('type_name'),
-                        child: Container(
-                        alignment: Alignment.centerRight,
-                          child: Text('${value.get('type_name')}',style: TextStyle(fontSize: 16),),
-                        ),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(
-                              () {
-                            typeDevice = value;
-                            // Default dropdown value won't be displayed anymore
-                            setDefaultMake = false;
-                            // Set makeModel to true to display first car from list
-                            setDefaultMakeModel = true;
-                          },
-                        );
-                      },
-                     // hint:Text("                                                                                     "),
-
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
-              ),
               ),
               ],
             ),
@@ -178,7 +178,6 @@ class _EditDeviceFormState extends State<EditDeviceForm> {
               ),
               onPressed: () async {
                 widget.nameDeviceFocusNode.unfocus();
-               // widget.typeDeviceFocusNode.unfocus();
 
 
                 var d = FirebaseFirestore.instance.collection("Type");

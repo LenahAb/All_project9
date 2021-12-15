@@ -135,10 +135,10 @@ class _EditPasswordFormState extends State<EditPasswordForm> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             backgroundColor: Colors.lightGreen,
-                            duration: Duration(seconds:30),
+                            duration: Duration(seconds:5),
                             //padding: EdgeInsets.only(right: 30.0),
                             action: SnackBarAction(
-                                label: 'حسنًا',
+                                label: 'X',
                                 textColor: Colors.white,
                                 onPressed: () {
                                 }),

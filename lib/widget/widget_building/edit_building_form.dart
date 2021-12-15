@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:log_in/utils/databaseBuilding.dart';
 import 'package:log_in/utils/validator.dart';
@@ -37,7 +38,13 @@ class _EditBuildingFormState extends State<EditBuildingForm> {
     'خيري',
     'خاص',
   ];
+
+ // late var c =FirebaseFirestore.instance.collection("Building").where("building_id", isEqualTo: widget.documentId).snapshots();
+  //var r= data?.docs.get('type');
+
   var _selectedFruit;
+
+  var setDefaultMake = true, setDefaultMakeModel = true;
 
   late TextEditingController _nameDeviceController;
   late TextEditingController _typeDeviceController;
@@ -110,7 +117,22 @@ class _EditBuildingFormState extends State<EditBuildingForm> {
                   border: Border.all(color: Colors.black38, width:1),
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10)),
-              child: DropdownButton(
+              child: Center(
+                      child: StreamBuilder<QuerySnapshot>(
+                         stream:FirebaseFirestore.instance.collection("Building").where("building_id", isEqualTo: widget.documentId).snapshots(),
+                       builder: (BuildContext context,
+                             AsyncSnapshot<QuerySnapshot> snapshot) {
+
+                            if (!snapshot.hasData) return Container();
+
+                         if (setDefaultMake) {
+                               _selectedFruit = snapshot.data?.docs[0].get('type');
+                           //debugPrint('setDefault typeDevice: $_selectedFruit');
+
+                       }
+
+
+             return DropdownButton(
                   dropdownColor: Colors.white,
                   style: TextStyle(color: Colors.black),
                   iconEnabledColor:Color(0xFF0390C3),
@@ -133,11 +155,21 @@ class _EditBuildingFormState extends State<EditBuildingForm> {
 
                         ));
                   }).toList(),
-                  onChanged: (selectedItem) => setState(() => _selectedFruit = selectedItem,
-                  ),
-                ),
-            ),
+                          onChanged: (selectedItem) {
+                          setState(() {_selectedFruit = selectedItem;
 
+                            setDefaultMake = false;
+
+                            setDefaultMakeModel = true;
+                                           },
+                                    );}
+
+
+                );
+    },
+    ),
+    ),
+    ),
               ],
             ),
           ),

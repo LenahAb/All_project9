@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:log_in/screens/screens_building/edit_building_screen.dart';
-import 'package:log_in/screens/screens_device/list_device_smart_screen.dart';
 import 'package:log_in/utils/databaseBuilding.dart';
 import 'package:log_in/utils/utils_device/navigaion.dart';
 
@@ -16,25 +15,25 @@ class BuildingList extends StatefulWidget {
   _BuildingList createState() => _BuildingList();}
   class _BuildingList extends State<BuildingList> {
 
-    late User u;
+    late User _IdUser;
 
     @override
     void initState() {
-      u = widget.user ;
+      _IdUser = widget.user ;
       super.initState();
     }
 
     @override
     Widget build(BuildContext context) {
       return StreamBuilder<QuerySnapshot>(
-        stream: DatabaseBuilding.readBuildings(buildingOwnerId:u.uid),
+        stream: DatabaseBuilding.readBuildings(buildingOwnerId:_IdUser.uid),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Text('Something went wrong');
           } else if (snapshot.hasData || snapshot.data != null) {
+           // if (snapshot.data!.docs.isNotEmpty) {
             return ListView.separated(
               separatorBuilder: (context, index) => SizedBox(height: 16.0),
-
               shrinkWrap: true,
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) {
@@ -66,7 +65,7 @@ class BuildingList extends StatefulWidget {
                     Expanded(
                     flex: 40,
                       child :IconButton(
-                            icon: Icon(Icons.edit, color: Color(0xFF0390C3),size: 20,),
+                            icon: Icon(Icons.edit, color: Color(0xFF0390C3),size: 23,),
                             onPressed: () async {
                               await FirebaseAuth.instance.signOut();
                               Navigator.of(context).push(
@@ -85,7 +84,7 @@ class BuildingList extends StatefulWidget {
                     Expanded(
                         flex: 30,
                         child : IconButton(
-                            icon: Icon(Icons.delete, color: Colors.red,size: 20,),
+                            icon: Icon(Icons.delete, color: Colors.red,size: 23,),
                             onPressed: ()  {
                               showAlertDialog(context, docID);
                             }
@@ -104,7 +103,7 @@ class BuildingList extends StatefulWidget {
                      onTap: () => Navigator.of(context).push(
                      MaterialPageRoute(
                      builder: (context) => Navigation(
-                      BuildingId: docID, user: u,
+                      BuildingId: docID, user: _IdUser,
                     ),
                      ),
                        ),
@@ -180,6 +179,15 @@ class BuildingList extends StatefulWidget {
 
               },
             );
+           /* } else if (!snapshot.hasData) {
+              Center(
+                  child: Text('لا يوجد مباني',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22,
+                      )));
+            }*/
+
           }
 
           return Center(
@@ -193,6 +201,8 @@ class BuildingList extends StatefulWidget {
           );
         },
       );
+
+
     }
 
 

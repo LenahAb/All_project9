@@ -8,13 +8,14 @@ class DatabaseSmartPlug {
 
   static Future<void> addSmart({
     required String nameSmart_plug,
+    required String keySmart_plug,
     required String buildingId,
   }) async {
-    DocumentReference documentReferencer = firestore.collection('SmartPlug').doc();
+    DocumentReference documentReferencer = firestore.collection('SmartPlug').doc(keySmart_plug);
 
     Map<String, dynamic> data = <String, dynamic>{
       "smart_plug_name": nameSmart_plug,
-      "smart_plug_id": documentReferencer.id,
+      "smart_plug_id": keySmart_plug,
       "building_id": firestore.doc('Building/'+buildingId),
     };
 

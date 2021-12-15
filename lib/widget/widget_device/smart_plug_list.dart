@@ -29,6 +29,7 @@ bool _isDeleting = false;
         if (snapshot.hasError) {
           return Text('Something went wrong');
         } else if (snapshot.hasData || snapshot.data != null) {
+          if(snapshot.data!.docs.isNotEmpty){
           return ListView.separated(
             separatorBuilder: (context, index) => SizedBox(height: 16.0),
             itemCount: snapshot.data!.docs.length,
@@ -67,24 +68,18 @@ bool _isDeleting = false;
                           alignment: Alignment.centerRight,
                           child: Text('تعديل معلومات القابس الذكي    '),),
                         ),
-                        PopupMenuItem(
+                        /*PopupMenuItem(
                           value: 1,
                         child: Container(
                       alignment: Alignment.centerRight,
                           child: Text('ربط الجهاز بالقابس الذكي'),),
-                        ),
+                        ),*/
                         PopupMenuItem(
-                          value: 2,
+                          value: 1,
                       child: Container(
                       alignment: Alignment.centerRight,
                           child: Text('حذف القابس الذكي    '),),
                         ),
-                        PopupMenuItem(
-                          value: 3,
-                          child: Container(
-                            alignment: Alignment.centerRight,
-                            child: Text('اظاهر رقم القابس الذكي   '),),
-                        )
                       ];
                     },
                     onSelected: (int value) async {
@@ -102,23 +97,19 @@ bool _isDeleting = false;
                           );
                           break;
 
-                        case 1:
+                        /*case 1:
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => Linked(BuildingId: widget.BuildingId),
                             ),
                           );
-                          break;
+                          break;*/
 
-                        case 2:
+                        case 1:
                           _isDeleting = true;
                           showAlertDialog(context,docID);
                           break;
 
-                        case 3:
-                          _isDeleting = true;
-                          showAlertDialogId(context,docID);
-                          break;
                       }
                     },
                   ),
@@ -137,6 +128,16 @@ bool _isDeleting = false;
 
             },
           );
+          }else {
+            return Center(
+                child: Text(
+                  'لا توجد قوابس ذكية',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22,
+                  ),
+                ));
+          }
         }
 
         return Center(
@@ -209,6 +210,10 @@ bool _isDeleting = false;
   }
 
 
+
+
+
+/*
 void showAlertDialogId(BuildContext context, String doc) {
   // set up the buttons
 
@@ -292,7 +297,7 @@ Widget _containerAlert(String doc) {
     ),
 
   );
-}
+}*/
 
 
 }

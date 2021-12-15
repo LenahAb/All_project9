@@ -18,11 +18,11 @@ class AddSmartScreen extends StatefulWidget {
 class _AddSmartScreen extends State<AddSmartScreen> {
   final FocusNode _nameSmart = FocusNode();
 
-  late User u;
+  late User _IdUser;
 
   @override
   void initState() {
-    u = widget.user ;
+    _IdUser = widget.user ;
     super.initState();
   }
 
@@ -59,7 +59,7 @@ class _AddSmartScreen extends State<AddSmartScreen> {
               ),
               child: AddSmartForm(
                 plugNameFocusNode:  _nameSmart,
-                BuildingId: widget.BuildingId, user: u,
+                BuildingId: widget.BuildingId, user: _IdUser,
               ),
             ),
           ),
