@@ -201,6 +201,8 @@ class _AddDeviceForm extends State<AddBuildingForm> {
                       'hgggggggggggggggggggggggggg'
                     );
 
+
+
                   /*c =  FirebaseFirestore.instance.collection("Building").where("building_owner_id", isEqualTo:'BuildingOwner/'+_IdUser.uid).snapshots();
                      c.get().then((QuerySnapshot snapshot) {
                      snapshot.docs.forEach((DocumentSnapshot doc) {
@@ -251,6 +253,7 @@ class _AddDeviceForm extends State<AddBuildingForm> {
                         ),
                       ),
                     );
+
                     }
                     /*ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(

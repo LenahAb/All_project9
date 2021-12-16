@@ -58,7 +58,7 @@ class _EditPasswordFormState extends State<EditPasswordForm> {
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFF0390C3),
-                      letterSpacing: 2,),),
+                      letterSpacing: 2,),textAlign: TextAlign.right,),
                   ),
                 ],
               ),

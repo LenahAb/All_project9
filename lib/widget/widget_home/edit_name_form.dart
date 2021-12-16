@@ -53,12 +53,12 @@ class _EditNameFormState extends State<EditNameForm> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
 
-                      Padding(padding: EdgeInsets.only(left: 150.0, top: 150.0),
+                      Padding(padding: EdgeInsets.only(left: 190.0, top: 150.0),
                         child: Text(': تعديل الأسم', style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF0390C3),
-                          letterSpacing: 2,),),
+                          letterSpacing: 2,),textAlign: TextAlign.right,),
                       ),
                     ],
                   ),

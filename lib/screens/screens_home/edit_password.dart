@@ -37,6 +37,7 @@ class _EditPasswordState extends State<EditPassword> {
         child:Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
+            centerTitle: true,
             title: Text('تعديل كلمة المرور ',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF0390C3), letterSpacing: 2,
             ),),
             elevation: 0,

@@ -51,9 +51,9 @@ class _ReportState extends State<Report> {
           .then((value) {
         if (value.exists) {
           data.add(ReportSeries(
-              name: element.name,
-              amount: value.data()!['amount'],
-              barColor: charts.ColorUtil.fromDartColor(Color(0xFF0390C3)),
+            name: element.name,
+            amount: value.data()!['amount'],
+            barColor: charts.ColorUtil.fromDartColor(Color(0xFF0390C3)),
           ));
         }
       });
@@ -143,107 +143,107 @@ class _ReportState extends State<Report> {
   @override
   Widget build(BuildContext context) {
     return BackgroundImageWidget(
-        image: AssetImage("assets/Colorized Register&Login v2 – 19.png"),
+      image: AssetImage("assets/Colorized Register&Login v2 – 19.png"),
 
-    child:Scaffold(
-      backgroundColor: Colors.transparent,
+      child:Scaffold(
+        backgroundColor: Colors.transparent,
 
-      appBar: AppBar(
-        elevation: 0,
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-                icon: const Icon(Icons.arrow_back, color: Color(0xFF535353)),
-                onPressed: () async {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (context) => Navigation(user: u, BuildingId: widget.BuildingId),
-                    ),
-                  );
-                }
-            );
-          },
+        appBar: AppBar(
+          elevation: 0,
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                  icon: const Icon(Icons.arrow_back, color: Color(0xFF535353)),
+                  onPressed: () async {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => Navigation(user: u, BuildingId: widget.BuildingId),
+                      ),
+                    );
+                  }
+              );
+            },
 
+          ),
+          backgroundColor: Color(0xFFF5F8FA),
+          centerTitle: true,
+          title: Text('التقرير',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF0390C3), letterSpacing: 2,),),
         ),
-        backgroundColor: Color(0xFFF5F8FA),
-        centerTitle: true,
-        title: Text('التقرير',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF0390C3), letterSpacing: 2,),),
-      ),
 
 
-      body:  loading
-          ? Center(child: CircularProgressIndicator()): empty? Center(child:Text('لا يوجد استهلاك',  style: TextStyle(
-       fontWeight: FontWeight.bold,
-        fontSize: 22,
-      ),))
-          : Theme(data:ThemeData.light(),
-        child: SingleChildScrollView(
-          child: Container(
-            width: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 20.0, horizontal: 40),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        'الاستهلاك الشهري لأجهزة $buildingName ',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22,
+        body:  loading
+            ? Center(child: CircularProgressIndicator()): empty? Center(child:Text('لا يوجد استهلاك',  style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 22,
+        ),))
+            : Theme(data:ThemeData.light(),
+          child: SingleChildScrollView(
+            child: Container(
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20.0, horizontal: 40),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          'الاستهلاك الشهري لأجهزة $buildingName ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
+                          ),
+                          // textDirection: TextDirection.rtl
                         ),
-                        // textDirection: TextDirection.rtl
-                      ),
-                  Padding(padding: const EdgeInsets.only(left: 180.0,right: 20.0 ,top: 20),
-                    child: Container(padding:  EdgeInsets.symmetric(horizontal: 10, vertical:1),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black38, width:1),
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10)),
-                    child:DropdownButton(
-                        dropdownColor: Colors.white,
-                        style: TextStyle(color: Colors.black),
-                        iconEnabledColor:Color(0xFF0390C3),
-                        isExpanded: true,
-                        isDense: true,
-                        iconSize: 34,
-                      underline: Container(),
-                        value: dropValue,
-                        items: monthModel.map((items) {
-                          return DropdownMenuItem(
-                            value: items.month,
-                            child: Text(items.month),
-                          );
-                        }).toList(),
-                        onChanged: (newValue) {
-                          dropValue = newValue;
+                        Padding(padding: const EdgeInsets.only(left: 20.0,right: 20.0 ,top: 20),
+                          child: Container(padding:  EdgeInsets.symmetric(horizontal: 10, vertical:1),width:MediaQuery.of(context).size.width/3,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black38, width:1),
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10)),
+                            child:DropdownButton(
+                              dropdownColor: Colors.white,
+                              style: TextStyle(color: Colors.black),
+                              iconEnabledColor:Color(0xFF0390C3),
+                              isExpanded: true,
+                              isDense: true,
+                              iconSize: 34,
+                              underline: Container(),
+                              value: dropValue,
+                              items: monthModel.map((items) {
+                                return DropdownMenuItem(
+                                  value: items.month,
+                                  child: Text(items.month),
+                                );
+                              }).toList(),
+                              onChanged: (newValue) {
+                                dropValue = newValue;
 
-                          MonthModel model = monthModel.firstWhere(
-                                  (element) => element.month == newValue);
-                          fullAmount = model.consumption;
-                          fullCost = model.cost;
-                          addGraph(dropValue.toString()).then((_) {
-                            setState(() {});
-                          });
-                          //  Navigator.of(context).push(MaterialPageRoute(builder: (_)=>Report()));
-                        },
-                    ),
-                    ),
-                      ),
-                      Container(
-                        height: 250,
-                        child: ReportChart(
-                          data: data,
+                                MonthModel model = monthModel.firstWhere(
+                                        (element) => element.month == newValue);
+                                fullAmount = model.consumption;
+                                fullCost = model.cost;
+                                addGraph(dropValue.toString()).then((_) {
+                                  setState(() {});
+                                });
+                                //  Navigator.of(context).push(MaterialPageRoute(builder: (_)=>Report()));
+                              },
+                            ),
+                          ),
                         ),
-                      ),
-                      Container(
-                        height: 3,
-                        color: Colors.grey[300],
-                      ),
-                      /* Container(
+                        Container(
+                          height: 250,
+                          child: ReportChart(
+                            data: data,
+                          ),
+                        ),
+                        Container(
+                          height: 3,
+                          color: Colors.grey[300],
+                        ),
+                        /* Container(
                           padding: const EdgeInsets.all(20),
                           width: double.infinity,
                           child: Column(
@@ -267,118 +267,118 @@ class _ReportState extends State<Report> {
                             ],
                           ),
                         ),*/
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  padding: const EdgeInsets.only(left: 20.0,right: 20.0),
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text('الاستهلاك الشهري لأجهزة $buildingName',
-                          style: TextStyle(
-                            color: Color(0xFF0390C3),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                          textDirection: TextDirection.rtl),
-                      /*Container(
+                  Container(
+                    padding: const EdgeInsets.only(left: 20.0,right: 20.0),
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text('الاستهلاك الشهري لأجهزة $buildingName',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                            textDirection: TextDirection.rtl),
+                        /*Container(
                         height: 2,
                         color: Colors.grey[300],
                       ),*/
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        width: double.infinity,
-                        height: 40,
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 3, horizontal: 7),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                            color: Color(0xFF0390C3),
-                            width: 1.5,
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          width: double.infinity,
+                          height: 40,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 3, horizontal: 7),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
+                              color: Color(0xFF0390C3),
+                              width: 1.5,
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                fullAmount.toString(),
+                                style: const TextStyle(
+                                    fontSize: 16, color: Colors.grey),
+                              ),
+                              Text(
+                                '$dropValue',
+                                style: const TextStyle(
+                                    fontSize: 16, color: Colors.grey),
+                              ),
+                            ],
                           ),
                         ),
-                        child: Row(
-                          mainAxisAlignment:
-                          MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              fullAmount.toString(),
-                              style: const TextStyle(
-                                  fontSize: 16, color: Colors.grey),
-                            ),
-                            Text(
-                              '$dropValue',
-                              style: const TextStyle(
-                                  fontSize: 16, color: Colors.grey),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                Container(
-                  padding: const EdgeInsets.only(left: 20.0,right: 20.0),
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text('تكلفة الاستهلاك الشهري ل $buildingName',
-                          style: TextStyle(
-                            color: Color(0xFF0390C3),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                          textDirection: TextDirection.rtl),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        width: double.infinity,
-                        height: 40,
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 3, horizontal: 7),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                            color: Color(0xFF0390C3),
-                            width: 1.5,
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment:
-                          MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              fullCost.toString(),
-                              style: const TextStyle(
-                                  fontSize: 16, color: Colors.grey),
-                            ),
-                            Text(
-                              '$dropValue',
-                              style: const TextStyle(
-                                  fontSize: 16, color: Colors.grey),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                  const SizedBox(
+                    height: 40,
                   ),
-                ),
-              ],
+                  Container(
+                    padding: const EdgeInsets.only(left: 20.0,right: 20.0),
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text('تكلفة الاستهلاك الشهري ل $buildingName',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                            textDirection: TextDirection.rtl),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          width: double.infinity,
+                          height: 40,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 3, horizontal: 7),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
+                              color: Color(0xFF0390C3),
+                              width: 1.5,
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                fullCost.toString(),
+                                style: const TextStyle(
+                                    fontSize: 16, color: Colors.grey),
+                              ),
+                              Text(
+                                '$dropValue',
+                                style: const TextStyle(
+                                    fontSize: 16, color: Colors.grey),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
-    ),
     );
   }
 }

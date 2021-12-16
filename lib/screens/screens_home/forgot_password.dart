@@ -64,10 +64,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         children: [
                           SizedBox(height: 25.0),
                           Padding(padding: EdgeInsets.only(left: 160.0,top: 60.0),
-                            child: Text(' نسيت كلمة المرور',style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF0390C3), letterSpacing: 2,),),
+                            child: Text(' نسيت كلمة المرور',style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF0390C3), letterSpacing: 2,),textAlign: TextAlign.right,),
                           ),
                           Padding(padding: EdgeInsets.only(left:20.0, ),
-                            child: Text('نحتاج لبريدك الالكتروني لإرسال رابط إعادة تعيين كلمة المرور',style: TextStyle(fontSize: 15, color: Colors.grey[700], letterSpacing: 2,),),
+                            child: Text('نحتاج لبريدك الالكتروني لإرسال رابط إعادة تعيين كلمة المرور',style: TextStyle(fontSize: 15, color: Colors.grey[700], letterSpacing: 2,), textAlign: TextAlign.right,),
                           ),],
                       ),
 
