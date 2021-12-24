@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:log_in/screens/screens_building/add_building_screen.dart';
-import 'package:log_in/screens/screens_building/list_building_screen.dart';
-import 'package:log_in/screens/screens_device/list_device_smart_screen.dart';
-import 'package:log_in/screens/screens_device/report.dart';
+import 'package:group3/screens/screens_building/add_building_screen.dart';
+import 'package:group3/screens/screens_building/list_building_screen.dart';
+import 'package:group3/screens/screens_device/list_device_smart_screen.dart';
+import 'package:group3/screens/screens_device/report.dart';
 
 
 class Navigation extends StatefulWidget {

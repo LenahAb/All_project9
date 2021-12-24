@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:log_in/utils/databaseBuilding.dart';
+import 'package:group3/utils/databaseBuilding.dart';
 var db=FirebaseFirestore.instance.collection("Links").doc();
 var device;
 var smart;
@@ -100,6 +100,7 @@ class disconnect{
             }
 
             db.set({
+              "active":false,
               "end_time":DateTime.now()
             } ,
                 SetOptions(merge : true));

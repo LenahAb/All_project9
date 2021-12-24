@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:log_in/screens/screens_device/edit_Smart_screen.dart';
-import 'package:log_in/screens/screens_device/linked.dart';
-import 'package:log_in/utils/utils_device/databaseSmart.dart';
+import 'package:group3/screens/screens_device/edit_Smart_screen.dart';
+import 'package:group3/screens/screens_device/linked.dart';
+import 'package:group3/utils/utils_device/databaseSmart.dart';
 
 
 class SmartPlugeList extends StatefulWidget {

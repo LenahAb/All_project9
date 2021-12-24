@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:log_in/utils/databaseBuilding.dart';
-import 'package:log_in/utils/validator.dart';
+import 'package:group3/utils/databaseBuilding.dart';
+import 'package:group3/utils/validator.dart';
 
 
 import '../../utils/custom_form_field.dart';

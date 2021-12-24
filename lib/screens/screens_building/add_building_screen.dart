@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:log_in/utils/background_image_widget.dart';
-import 'package:log_in/widget/widget_building/add_building_form.dart';
+import 'package:group3/utils/background_image_widget.dart';
+import 'package:group3/widget/widget_building/add_building_form.dart';
 
 class AddBuildingScreen extends StatefulWidget {
   final User user;

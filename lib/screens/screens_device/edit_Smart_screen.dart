@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:log_in/utils/background_image_widget.dart';
-import 'package:log_in/widget/widget_device/edit_Smart_form.dart';
+import 'package:group3/utils/background_image_widget.dart';
+import 'package:group3/widget/widget_device/edit_Smart_form.dart';
 
 
 

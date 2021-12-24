@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:log_in/utils/databaseBuilding.dart';
-import 'package:log_in/utils/background_image_widget.dart';
-import 'package:log_in/widget/widget_building/edit_building_form.dart';
+import 'package:group3/utils/databaseBuilding.dart';
+import 'package:group3/utils/background_image_widget.dart';
+import 'package:group3/widget/widget_building/edit_building_form.dart';
 
 
 class EditBuildingScreen extends StatefulWidget {

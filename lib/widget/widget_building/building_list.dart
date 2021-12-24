@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:log_in/screens/screens_building/edit_building_screen.dart';
-import 'package:log_in/utils/databaseBuilding.dart';
-import 'package:log_in/utils/utils_device/navigaion.dart';
+import 'package:group3/screens/screens_building/edit_building_screen.dart';
+import 'package:group3/utils/databaseBuilding.dart';
+import 'package:group3/utils/utils_device/navigaion.dart';
 
 
 class BuildingList extends StatefulWidget {

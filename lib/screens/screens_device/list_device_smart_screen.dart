@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:log_in/screens/screens_building/list_building_screen.dart';
-import 'package:log_in/utils/background_image_widget.dart';
-import 'package:log_in/utils/utils_device/navigaion.dart';
-import 'package:log_in/widget/widget_device/device_list.dart';
-import 'package:log_in/widget/widget_device/smart_plug_list.dart';
+import 'package:group3/screens/screens_building/list_building_screen.dart';
+import 'package:group3/utils/background_image_widget.dart';
+import 'package:group3/utils/utils_device/navigaion.dart';
+import 'package:group3/widget/widget_device/device_list.dart';
+import 'package:group3/widget/widget_device/smart_plug_list.dart';
 import 'package:tuple/tuple.dart';
 import 'icon_add.dart';
 

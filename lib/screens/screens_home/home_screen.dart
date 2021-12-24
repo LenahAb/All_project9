@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:log_in/screens/screens_home/sign_up.dart';
-import 'package:log_in/utils/background_image_widget.dart';
+import 'package:group3/screens/screens_home/sign_up.dart';
+import 'package:group3/utils/background_image_widget.dart';
 
 import 'log_in.dart';
 

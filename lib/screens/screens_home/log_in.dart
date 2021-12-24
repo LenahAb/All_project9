@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:log_in/screens/screens_building/list_building_screen.dart';
-import 'package:log_in/utils/fire_auth.dart';
-import 'package:log_in/utils/validator.dart';
-import 'package:log_in/utils/background_image_widget.dart';
-import 'package:log_in/utils/custom_form_field.dart';
+import 'package:group3/screens/screens_building/list_building_screen.dart';
+import 'package:group3/utils/fire_auth.dart';
+import 'package:group3/utils/validator.dart';
+import 'package:group3/utils/background_image_widget.dart';
+import 'package:group3/utils/custom_form_field.dart';
 import 'forgot_password.dart';
 
 class LogIn extends StatefulWidget {

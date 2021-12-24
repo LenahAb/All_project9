@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:log_in/screens/screens_home/edit_name.dart';
-import 'package:log_in/screens/screens_home/edit_password.dart';
-import 'package:log_in/screens/screens_home/home_screen.dart';
-import 'package:log_in/utils/fire_auth.dart';
-import 'package:log_in/utils/background_image_widget.dart';
+import 'package:group3/screens/screens_home/edit_name.dart';
+import 'package:group3/screens/screens_home/edit_password.dart';
+import 'package:group3/screens/screens_home/home_screen.dart';
+import 'package:group3/utils/fire_auth.dart';
+import 'package:group3/utils/background_image_widget.dart';
 
 
 

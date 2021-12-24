@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:log_in/screens/screens_device/list_device_smart_screen.dart';
-import 'package:log_in/screens/screens_home/home_screen.dart';
-import 'package:log_in/screens/screens_home/profile_page.dart';
-import 'package:log_in/utils/background_image_widget.dart';
-import 'package:log_in/widget/widget_building/building_list.dart';
+import 'package:group3/screens/screens_device/list_device_smart_screen.dart';
+import 'package:group3/screens/screens_home/home_screen.dart';
+import 'package:group3/screens/screens_home/profile_page.dart';
+import 'package:group3/utils/background_image_widget.dart';
+import 'package:group3/widget/widget_building/building_list.dart';
 
 import 'add_building_screen.dart';
 

@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:log_in/utils/background_image_widget.dart';
-import 'package:log_in/utils/utils_device/generated_plugin_registrant.dart';
+import 'package:group3/utils/background_image_widget.dart';
+import 'package:group3/utils/utils_device/generated_plugin_registrant.dart';
 
 class Linked extends StatefulWidget {
   final String BuildingId;

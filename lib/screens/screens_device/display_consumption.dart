@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:log_in/utils/background_image_widget.dart';
+import 'package:group3/utils/background_image_widget.dart';
 
 class DisplayConsumption extends StatefulWidget {
-  // تحديد document الخاص بالجهاز
+  //
   final String deviceId;
 
   DisplayConsumption({required this.deviceId});
@@ -15,7 +15,7 @@ class DisplayConsumption extends StatefulWidget {
 }
 
 class _DisplayConsumptionState extends State<DisplayConsumption> {
-  // لتخزين قيم الاستهلاكات
+
   List? currentlyConsumpList;
   List? dailyConsumpList;
   List? monthlyConsumpList;
@@ -23,15 +23,15 @@ class _DisplayConsumptionState extends State<DisplayConsumption> {
   static String collectionName = 'Device';
   static String collectionTypeName = 'DeviceType';
 
-  // لتخزين قيمة اعلى حد مسموح به
+
   static var range = 0;
 
-  // تحديد انواع الاستهلاكات
+
   static String currentlyConsump = 'CurrentlyConsumption';
   static String dailyConsump = 'DailyConsumption';
   static String monthlyConsump = 'MonthlyConsumption';
 
-//  تحديد متغيرات انواع الاستهلاكات
+
 
   static var currentlyRef;
   static var monthlyRef;
@@ -86,14 +86,14 @@ class _DisplayConsumptionState extends State<DisplayConsumption> {
 
   bool isOverCons = false;
 
-  // هذه الدالة تستدعي ما بداخلها بمجرد فتح الصفحة
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
     getIdType();
-    // استدعاء الميثودات عند فتح الصفحة
+
   }
 
   @override
@@ -123,274 +123,374 @@ class _DisplayConsumptionState extends State<DisplayConsumption> {
               )),
           leading: BackButton(color: Color(0xFF535353)),
         ),
-        body: Container(
-          width: size.width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              //  تنفيذ طباعة قيمة الاستهلاك الحالي
-              Builder(
-                builder: (context) {
-                  WidgetsBinding.instance!.addPostFrameCallback((_) {
-                    currentlyRef >= range
-                        ? isOverCons = true
-                        : isOverCons = false;
-                  });
+        body: Stack(
+          children: [
+            Positioned(
+                top: 0,
+                child: Container(
+                  height: size.height / 3,
+                  width: size.width,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xFF0390C3).withOpacity(0.7),
+                          Color(0xFF0390C3).withOpacity(0.4)
+                        ],
+                      )),
+                )),
+            Positioned(
+              top: size.height / 3,
+              height: size.height *(2/3)-130,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
 
-                  /*
-
-                    SchedulerBinding.instance!.addPostFrameCallback((_) {
-
-                      currentlyRef >= range? giveAlert(context) : '' ;
-
-                    });
-
-    */
-
-                  return Container(
-                    height: size.height / 3,
-                    width: size.width,
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Color(0xFF0390C3).withOpacity(0.7),
-                            Color(0xFF0390C3).withOpacity(0.4)
-                          ],
-                        )),
-                    child: StreamBuilder<Object>(
-                        stream: FirebaseFirestore.instance
-                            .collection(collectionName)
-                            .doc(widget.deviceId)
-                            .snapshots(),
-                        builder: (context, AsyncSnapshot snapshot) {
-                          if (snapshot.hasError) {
-
-                            return Center(
-                              child: Text(snapshot.error.toString()),
-                            );
-                          }
-
-                          if (!snapshot.hasData) {
-                            return const Center(
-                                child: CircularProgressIndicator());
-                          }
-
-                          DocumentSnapshot dsnap=snapshot.data;
-                          currentlyRef=dsnap.data()!['active_consumption'];
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                'الاستهلاك الحالي',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 23,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                currentlyRef.toString(),
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
+                    StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection(collectionName)
+                          .doc(widget.deviceId)
+                          .collection(dailyConsump)
+                          .snapshots(),
+                      builder:
+                          (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: Text(snapshot.error.toString()),
                           );
-                        }),
-                  );
-                },
-              ),
+                        }
 
-              //  تنفيذ طباعة قيمة الاستهلاك اليومي
-              StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance
-                    .collection(collectionName)
-                    .doc(widget.deviceId)
-                    .collection(dailyConsump)
-                    .snapshots(),
-                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasError) {
-                    return Center(
-                      child: Text(snapshot.error.toString()),
-                    );
-                  }
+                        if (!snapshot.hasData) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
 
-                  if (!snapshot.hasData) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
+                        final data = snapshot.requireData;
+                        if (data.docs.isNotEmpty) {
 
-                  final data = snapshot.requireData;
-                  if (data.docs.isNotEmpty) {
-                    // if (dailyConsumpList == null) {
-                    //   selectedDay = data.docs.last.id;
-                    //   dailyConsumpList = List.filled(
-                    //       5, data.docs.last.data()['amount'],
-                    //       growable: true);
-                    // } else {
-                    //   dailyConsumpList!.add(data.docs.last.data()['amount']);
-                    //   dailyConsumpList!.removeAt(0);
-                    // }
+                          return Container(
+                            padding: const EdgeInsets.all(20),
+                            width: size.width,
 
-                    return Container(
-                      padding: const EdgeInsets.all(20),
-                      width: double.infinity,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(' الاستهلاك اليومي ل $deviceName',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                              ),
-                              textDirection: TextDirection.rtl),
-                          const Divider(
-                            thickness: 1.5,
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                            width: double.infinity,
-                            height: 40,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 3, horizontal: 7),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(
-                                color: Color(0xFF0390C3),
-                                width: 1.5,
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Text(
-                                  data.docs.last.data()['amount'].toString(),
-                                  style: const TextStyle(
-                                      fontSize: 16, color: Colors.grey),
+                                Text('الاستهلاك اليومي بالواط ',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                    ),
+                                    textDirection: TextDirection.rtl),
+                                const Divider(
+                                  thickness: 1.5,
                                 ),
-                                Text(
-                                  data.docs.last.id.toString(),
-                                  style: const TextStyle(
-                                      fontSize: 16, color: Colors.grey),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Container(
+                                  width: double.infinity,
+                                  height: 40,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 3, horizontal: 7),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(
+                                      color: Color(0xFF0390C3),
+                                      width: 1.5,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        data.docs.last
+                                            .data()['amount']
+                                            .toString(),
+                                        style: const TextStyle(
+                                            fontSize: 16, color: Colors.grey),
+                                      ),
+                                      Text(
+                                        data.docs.last.id.toString(),
+                                        style: const TextStyle(
+                                            fontSize: 16, color: Colors.grey),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+
+                                Text(' عدد ساعات الاستهلاك اليومي ',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                    ),
+                                    textDirection: TextDirection.rtl),
+                                const Divider(
+                                  thickness: 1.5,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                data.docs.last
+                                    .data()['hours']!=null?Container(
+                                  width: double.infinity,
+                                  height: 40,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 3, horizontal: 7),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(
+                                      color: Color(0xFF0390C3),
+                                      width: 1.5,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        data.docs.last
+                                            .data()['hours']
+                                            .toString(),
+                                        style: const TextStyle(
+                                            fontSize: 16, color: Colors.grey),
+                                      ),
+
+                                    ],
+                                  ),
+                                ):Container(),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return Container();
+                        }
+
+
+                      },
+                    ),
+
+
+                    StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection(collectionName)
+                          .doc(widget.deviceId)
+                          .collection(monthlyConsump)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: Text(snapshot.error.toString()),
+                          );
+                        }
+
+                        if (!snapshot.hasData) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
+
+                        final data = snapshot.requireData;
+
+                        if (data.docs.isNotEmpty) {
+                          return Container(
+                            padding: const EdgeInsets.all(20),
+                            width: size.width,
+
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text('الاستهلاك الشهري بالواط',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                    ),
+                                    textDirection: TextDirection.rtl),
+                                const Divider(
+                                  thickness: 1.5,
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Container(
+                                  width: double.infinity,
+                                  height: 40,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 3, horizontal: 7),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(
+                                      color: Color(0xFF0390C3),
+                                      width: 1.5,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        data.docs.last
+                                            .data()['amount']
+                                            .toString(),
+                                        style: const TextStyle(
+                                            fontSize: 16, color: Colors.grey),
+                                      ),
+                                      Text(
+                                        data.docs.last.id.toString(),
+                                        style: const TextStyle(
+                                            fontSize: 16, color: Colors.grey),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+                                const SizedBox(
+                                  height: 20,
+                                ),
+
+                                Text(' عدد ساعات الاستهلاك الشهري',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                    ),
+                                    textDirection: TextDirection.rtl),
+                                const Divider(
+                                  thickness: 1.5,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                data.docs.last
+                                    .data()['hours']!=null?Container(
+                                  width: double.infinity,
+                                  height: 40,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 3, horizontal: 7),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(
+                                      color: Color(0xFF0390C3),
+                                      width: 1.5,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        data.docs.last
+                                            .data()['hours']
+                                            .toString(),
+                                        style: const TextStyle(
+                                            fontSize: 16, color: Colors.grey),
+                                      ),
+
+                                    ],
+                                  ),
+                                ):Container(),
+
+                                const SizedBox(
+                                  height: 30,
                                 ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                    );
-                  } else {
-                    return Container();
-                  }
+                          );
+                        } else {
+                          return Container();
+                        }
+                      },
+                    ),
 
-                  //data.docs.last.data().amount.toString()
-                },
+
+                  ],
+                ),
               ),
+            ),
+            Positioned.fill(
+              child: StreamBuilder<Object>(
+                  stream: FirebaseFirestore.instance
+                      .collection(collectionName)
+                      .doc(widget.deviceId)
+                      .snapshots(),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text(snapshot.error.toString()),
+                      );
+                    }
 
-              //تنفيذ طباعة قيمة الاستهلاك الشهري
-              StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance
-                    .collection(collectionName)
-                    .doc(widget.deviceId)
-                    .collection(monthlyConsump)
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return Center(
-                      child: Text(snapshot.error.toString()),
-                    );
-                  }
+                    if (!snapshot.hasData) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
 
-                  if (!snapshot.hasData) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
+                    DocumentSnapshot dsnap = snapshot.data;
+                    currentlyRef = dsnap.data()!['active_consumption'];
 
-                  final data = snapshot.requireData;
-
-                  if (data.docs.isNotEmpty) {
-                    return Container(
-                      padding: const EdgeInsets.all(20),
-                      width: double.infinity,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(' الاستهلاك الشهري ل $deviceName',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                              ),
-                              textDirection: TextDirection.rtl),
-                          const Divider(
-                            thickness: 1.5,
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                            width: double.infinity,
-                            height: 40,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 3, horizontal: 7),
+                    if (currentlyRef >= range) {
+                      isOverCons = true;
+                    } else {
+                      isOverCons = false;
+                    }
+                    return Stack(
+                      children: [
+                        Positioned(
+                            top: 0,
+                            child: Container(height:size.height/3,width:size.width,
+                              child: Column(mainAxisAlignment:MainAxisAlignment.center,children: [
+                                const Text(
+                                  'الاستهلاك الحالي بالواط',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 23,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  currentlyRef.toString(),
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ]),
+                            )),
+                        Positioned(
+                          bottom: 0,
+                          child: Container(
+                            width: size.width,
+                            height: 80,
                             decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(
-                                color: Color(0xFF0390C3),
-                                width: 1.5,
-                              ),
+                              color: isOverCons
+                                  ? Colors.red[400]
+                                  : Colors.lightGreen[400],
+                              // border: Border.all(width: 2)
                             ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  data.docs.last.data()['amount'].toString(),
-                                  style: const TextStyle(
-                                      fontSize: 16, color: Colors.grey),
-                                ),
-                                Text(
-                                  data.docs.last.id.toString(),
-                                  style: const TextStyle(
-                                      fontSize: 16, color: Colors.grey),
-                                ),
-                              ],
+                            child: Center(
+                              child: Text(
+                                  isOverCons
+                                      ?
+                                  ' استهلاك $deviceName '+ 'يزيد عن حد معايير الشركة السعودية للكهرباء    '
+                                      : ' استهلاك $deviceName '+ 'يتوافق مع معايير الشركة السعودية للكهرباء    ',
+                                  style: TextStyle(
+                                      color: isOverCons
+                                          ? Colors.white
+                                          : Colors.black,
+                                      fontSize: 18),
+                                  textDirection: TextDirection.rtl),
                             ),
                           ),
-                        ],
-                      ),
+                        )
+                      ],
                     );
-                  } else {
-                    return Container();
-                  }
-                },
-              ),
-
-              const Spacer(),
-
-              Container(
-                width: double.infinity,
-                height: 80,
-                decoration: BoxDecoration(
-                  color: isOverCons ? Colors.red[400] : Colors.lightGreen[400],
-                  // border: Border.all(width: 2)
-                ),
-                child: Center(
-                  child: Text(
-                    isOverCons
-                        ? deviceName + ' يستهلك الحد الطبيعي للإستهلاك '
-                        : 'في حدود الإستهلاك الطبيعي ' +
-                        deviceName +
-                        ' الإستهلاك ل ',
-                    style: TextStyle(
-                        color: isOverCons ? Colors.white : Colors.black,
-                        fontSize: 18),
-                  ),
-                ),
-              ),
-            ],
-          ),
+                  }),
+            )
+          ],
         ),
       ),
     );

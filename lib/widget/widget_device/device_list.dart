@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:log_in/screens/screens_device/display_consumption.dart';
-import 'package:log_in/screens/screens_device/edit_device_screen.dart';
-import 'package:log_in/screens/screens_device/linked.dart';
-import 'package:log_in/utils/utils_device/databaseDevice.dart';
+import 'package:group3/screens/screens_device/display_consumption.dart';
+import 'package:group3/screens/screens_device/edit_device_screen.dart';
+import 'package:group3/screens/screens_device/linked.dart';
+import 'package:group3/utils/utils_device/databaseDevice.dart';
 
 class DeviceList extends StatefulWidget {
   final String BuildingId;

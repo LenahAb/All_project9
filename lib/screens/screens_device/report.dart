@@ -2,21 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:log_in/utils/background_image_widget.dart';
-import 'package:log_in/utils/utils_device/device_data.dart';
-import 'package:log_in/utils/utils_device/month_model.dart';
-import 'package:log_in/utils/utils_device/navigaion.dart';
-
-
+import 'package:group3/utils/background_image_widget.dart';
+import 'package:group3/utils/utils_device/device_data.dart';
+import 'package:group3/utils/utils_device/month_model.dart';
+import 'package:group3/utils/utils_device/navigaion.dart';
 
 class Report extends StatefulWidget {
   final String BuildingId;
   final User user;
 
-  Report({
-    required this. BuildingId,
-    required this.user
-  });
+  Report({required this.BuildingId, required this.user});
   @override
   _ReportState createState() => _ReportState();
 }
@@ -24,9 +19,8 @@ class Report extends StatefulWidget {
 class _ReportState extends State<Report> {
   late User u;
 
-
   bool loading = true;
-  bool empty=false;
+  bool empty = false;
   String buildingName = '';
 
   // put data for chart
@@ -69,18 +63,25 @@ class _ReportState extends State<Report> {
   // calculate all cost in specific month
 
   void getMonthsData() async {
-    await FirebaseFirestore.instance.collection('Building').doc(widget.BuildingId).get().then((value) {
+    await FirebaseFirestore.instance
+        .collection('Building')
+        .doc(widget.BuildingId)
+        .get()
+        .then((value) {
       if (value.exists) {
-
         buildingName = value['building_name'];
 
         value.reference.collection('MonthlyConsumption').get().then((v) {
           if (v.docs.isNotEmpty) {
             v.docs.forEach((item) {
-              monthModel.add(MonthModel(
-                  consumption: item['amount'],
-                  cost: item['cost'],
-                  month: item.id));
+
+              if(item.data()['amount']!=null && item.data()['cost']!=null){
+                monthModel.add(MonthModel(
+                    consumption: item.data()['amount'],
+                    cost: item.data()['cost'],
+                    month: item.id));
+              }
+
             });
 
             monthModel.sort((a, b) => a.month.compareTo(b.month));
@@ -92,17 +93,15 @@ class _ReportState extends State<Report> {
               setState(() {});
             });
           } else {
-
             setState(() {
-              empty=true;
+              empty = true;
               loading = false;
             });
           }
         });
       } else {
-
         setState(() {
-          empty=true;
+          empty = true;
           loading = false;
         });
       }
@@ -118,7 +117,6 @@ class _ReportState extends State<Report> {
   void getDevicesNames() async {
     await FirebaseFirestore.instance.collection('Device').get().then((value) {
       value.docs.forEach((element) {
-
         List<String> aa = element.data()['building_id'].toString().split('/');
         String buildingId = aa[1].substring(0, aa[1].length - 1);
         if (buildingId == widget.BuildingId) {
@@ -134,7 +132,7 @@ class _ReportState extends State<Report> {
   @override
   void initState() {
     // TODO: implement initState
-    u = widget.user ;
+    u = widget.user;
     super.initState();
     getDevicesNames();
     getMonthsData();
@@ -144,10 +142,8 @@ class _ReportState extends State<Report> {
   Widget build(BuildContext context) {
     return BackgroundImageWidget(
       image: AssetImage("assets/Colorized Register&Login v2 – 19.png"),
-
-      child:Scaffold(
+      child: Scaffold(
         backgroundColor: Colors.transparent,
-
         appBar: AppBar(
           elevation: 0,
           leading: Builder(
@@ -157,26 +153,38 @@ class _ReportState extends State<Report> {
                   onPressed: () async {
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => Navigation(user: u, BuildingId: widget.BuildingId),
+                        builder: (context) =>
+                            Navigation(user: u, BuildingId: widget.BuildingId),
                       ),
                     );
-                  }
-              );
+                  });
             },
-
           ),
           backgroundColor: Color(0xFFF5F8FA),
           centerTitle: true,
-          title: Text('التقرير',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF0390C3), letterSpacing: 2,),),
+          title: Text(
+            ' تقرير $buildingName',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF0390C3),
+              letterSpacing: 2,
+            ),
+          ),
         ),
-
-
-        body:  loading
-            ? Center(child: CircularProgressIndicator()): empty? Center(child:Text('لا يوجد استهلاك',  style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 22,
-        ),))
-            : Theme(data:ThemeData.light(),
+        body: loading
+            ? Center(child: CircularProgressIndicator())
+            : empty
+            ? Center(
+            child: Text(
+              'لا يوجد استهلاك',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 22,
+              ),
+            ))
+            : Theme(
+          data: ThemeData.light(),
           child: SingleChildScrollView(
             child: Container(
               width: double.infinity,
@@ -197,16 +205,24 @@ class _ReportState extends State<Report> {
                           ),
                           // textDirection: TextDirection.rtl
                         ),
-                        Padding(padding: const EdgeInsets.only(left: 20.0,right: 20.0 ,top: 20),
-                          child: Container(padding:  EdgeInsets.symmetric(horizontal: 10, vertical:1),width:MediaQuery.of(context).size.width/3,
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 20.0, right: 20.0, top: 20),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 1),
+                            width:
+                            MediaQuery.of(context).size.width / 3,
                             decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black38, width:1),
+                                border: Border.all(
+                                    color: Colors.black38, width: 1),
                                 color: Colors.white,
-                                borderRadius: BorderRadius.circular(10)),
-                            child:DropdownButton(
+                                borderRadius:
+                                BorderRadius.circular(10)),
+                            child: DropdownButton(
                               dropdownColor: Colors.white,
                               style: TextStyle(color: Colors.black),
-                              iconEnabledColor:Color(0xFF0390C3),
+                              iconEnabledColor: Color(0xFF0390C3),
                               isExpanded: true,
                               isDense: true,
                               iconSize: 34,
@@ -221,11 +237,13 @@ class _ReportState extends State<Report> {
                               onChanged: (newValue) {
                                 dropValue = newValue;
 
-                                MonthModel model = monthModel.firstWhere(
-                                        (element) => element.month == newValue);
+                                MonthModel model =
+                                monthModel.firstWhere((element) =>
+                                element.month == newValue);
                                 fullAmount = model.consumption;
                                 fullCost = model.cost;
-                                addGraph(dropValue.toString()).then((_) {
+                                addGraph(dropValue.toString())
+                                    .then((_) {
                                   setState(() {});
                                 });
                                 //  Navigator.of(context).push(MaterialPageRoute(builder: (_)=>Report()));
@@ -243,50 +261,25 @@ class _ReportState extends State<Report> {
                           height: 3,
                           color: Colors.grey[300],
                         ),
-                        /* Container(
-                          padding: const EdgeInsets.all(20),
-                          width: double.infinity,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text('كمية الاستهلاك'),
-                                  Text('اسم الجهاز'),
-                                ],
-                              ),
-                              Container(
-                                height: 2,
-                                color: Colors.grey[300],
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              displayMap(chartMap),
-                            ],
-                          ),
-                        ),*/
+
                       ],
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.only(left: 20.0,right: 20.0),
+                    padding: const EdgeInsets.only(
+                        left: 20.0, right: 20.0),
                     width: double.infinity,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text('الاستهلاك الشهري لأجهزة $buildingName',
+                        Text('الاستهلاك الشهري بالواط ',
                             style: TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
                             ),
                             textDirection: TextDirection.rtl),
-                        /*Container(
-                        height: 2,
-                        color: Colors.grey[300],
-                      ),*/
+
                         const SizedBox(
                           height: 20,
                         ),
@@ -326,12 +319,13 @@ class _ReportState extends State<Report> {
                     height: 40,
                   ),
                   Container(
-                    padding: const EdgeInsets.only(left: 20.0,right: 20.0),
+                    padding: const EdgeInsets.only(
+                        left: 20.0, right: 20.0),
                     width: double.infinity,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text('تكلفة الاستهلاك الشهري ل $buildingName',
+                        Text('تكلفة الاستهلاك الشهري بالريال السعودي',
                             style: TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,
@@ -414,15 +408,28 @@ class ReportChart extends StatelessWidget {
     ];
 
     return Container(
+      width: MediaQuery.of(context).size.width * 0.8,
       height: 400,
-      padding: EdgeInsets.all(20),
       child: Card(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: charts.BarChart(
-            series,
-            animate: true,
-            animationDuration: Duration(milliseconds: 100),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: charts.BarChart(
+                  series,
+                  animate: true,
+                  animationDuration: Duration(milliseconds: 100),
+                ),
+              ),
+              Column(mainAxisAlignment:MainAxisAlignment.end,
+                  children: [
+                    Expanded(flex:1,child: Container(alignment:Alignment.center,child: RotatedBox(quarterTurns: 1,child:Text('مقدار الإستهلاك بالواط',style:TextStyle(fontSize:12))))),
+                    Text('الأجهزة',style:TextStyle(fontSize:12)),
+                  ])
+
+            ],
           ),
         ),
       ),
